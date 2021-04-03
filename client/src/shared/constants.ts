@@ -6,8 +6,7 @@
 export const APP_VERSION: string = "0.1.0";
 
 // local storage keys
-export const ACCESS_TOKEN_KEY: string = "accessToken";
-
+export const ACCESS_TOKEN_KEY: string = "accessToken"
 export const INVALID_TOKEN_ERROR: string = "toast.user.invalid_token_error";
 
 export const RESPONSE_CONTENT_TYPE = {
