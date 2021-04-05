@@ -1,1 +1,5 @@
 export { default as Navbar} from './Navbar/Navbar'  
+export { default as MainSection} from './HomeSection/MainSection'  
+export { default as BubbleSection} from './HomeSection/BubbleSection'  
+export { default as ProductSection} from './HomeSection/ProductSection'  
+export { default as ProductCard} from './ProductCard/ProductCard'  
