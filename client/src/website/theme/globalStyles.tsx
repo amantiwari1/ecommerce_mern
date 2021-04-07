@@ -12,6 +12,7 @@ const customStyles = css`
   }
   body {
     ${tw`bg-lightmode dark:(bg-darkmode text-white) transition-all`}
+    scroll-behavior: smooth;
   }
 ` 
 
