@@ -5,6 +5,7 @@ import NavItems from './NavItems'
 import { GiHamburgerMenu, GiShoppingCart } from 'react-icons/gi'
 import { useState } from 'react'
 import DropdownTwin from '../Dropdown/Dropdown'
+import { Link } from 'react-router-dom'
 
 
 const ShopItems = [
@@ -56,9 +57,11 @@ const Navbar = () => {
 
             <div tw="flex justify-between  " >
                 <h1 tw=" text-3xl  tracking-wider text-blue-300 font-bold" >Sammoo</h1>
-
                 <div tw="flex  items-center space-x-5" >
+                    <Link to="/cart" >
                     <GiShoppingCart tw="text-white text-2xl md:hidden cursor-pointer" />
+                    </Link>
+
                     <div tw="md:hidden" >
                         <Toggle />
                     </div>
@@ -74,9 +77,15 @@ const Navbar = () => {
 
                 <DropdownTwin onTurnNav={onClick} name='Shop' navitems={ShopItems} />
                 <DropdownTwin onTurnNav={onClick} name='About' navitems={AboutItems} />
+                <Link to="/cart" >
                 <GiShoppingCart tw="xs:hidden md:inline text-white text-2xl  cursor-pointer" />
+                </Link>
                 <div tw="xs:hidden  md:inline" >
                     <Toggle tw=" items-center pt-2 " />
+                </div>
+
+                <div tw="(space-y-10 mt-10) md:(space-y-0 mt-0) " >
+                    <NavItems onClick={onClick} to="/signin" >Sign In</NavItems>
                 </div>
 
             </div>
