@@ -48,7 +48,7 @@ const DropdownTwin = ({ name, navitems, onTurnNav }: DropdownInterface): JSX.Ele
         </div>
 
         {isActive &&
-          <div ref={dropdownRef} tw=" z-20 origin-bottom-right absolute -right-4 mt-1  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none dark:(bg-darkmode border-blue-50)" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+          <div ref={dropdownRef} tw=" z-20 origin-bottom-right absolute -right-4   rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none dark:(bg-darkmode border-blue-50)" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 
             {
               navitems.map((navitem, index) => (
