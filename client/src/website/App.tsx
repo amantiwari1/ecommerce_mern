@@ -1,15 +1,23 @@
 import { ThemeProvider } from './theme/themeContext';
 import GlobalStyles from './theme/globalStyles'
 import { Route, Switch } from "react-router-dom";
-import Home from './pages/Home';
-import {Navbar, Footer} from './components'
-import Faq from './pages/Footer/Faq';
-import AboutUs from './pages/About/AboutUs';
-import WhatisBoba from './pages/About/WhatisBoba';
-import IngredientsList from './pages/About/IngredientsList';
-import ListofProduct from './template/ListofProduct';
-import ShoppingCart from './pages/ShoppingCart';
- 
+import {
+  Home,
+  Faq,
+  AboutUs,
+  WhatisBoba,
+  ShoppingCart,
+  SignIn,
+  IngredientsList,
+  SignUp
+} from './pages';
+
+import {
+  ListofProduct,
+  SingleProduct
+} from './template'
+import { Navbar, Footer } from './components'
+
 
 function App() {
   return (
@@ -17,13 +25,17 @@ function App() {
       <GlobalStyles />
       <Navbar />
       <Switch>
-        <Route exact path="/"  component={Home}  />
-        <Route exact path="/cart"  component={ShoppingCart}  />
-        <Route exact path="/pages/faq"  component={Faq}  />
-        <Route exact path="/pages/about"  component={AboutUs}  />
-        <Route exact path="/pages/what-is-boba"  component={WhatisBoba}  />
-        <Route exact path="/pages/ingredients-list"  component={IngredientsList}  />
-        <Route exact path="/collections/:CollectName"  component={ListofProduct}  />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/cart" component={ShoppingCart} />
+        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/collections/:CollectName/produdct/:productName" component={SingleProduct} />
+        <Route exact path="/pages/" component={ShoppingCart} />
+        <Route exact path="/pages/faq" component={Faq} />
+        <Route exact path="/pages/about" component={AboutUs} />
+        <Route exact path="/pages/what-is-boba" component={WhatisBoba} />
+        <Route exact path="/pages/ingredients-list" component={IngredientsList} />
+        <Route exact path="/collections/:CollectName" component={ListofProduct} />
       </Switch>
       <Footer />
     </ThemeProvider>
