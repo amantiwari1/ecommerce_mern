@@ -70,7 +70,7 @@ const Navbar = () => {
             </div>
 
 
-            <div css={[menu ? tw`right-0 ` : tw`-right-full`]} tw=" fixed  transition-all md:space-x-5  bg-lightnav items-center w-screen h-screen space-y-10 md:(static flex h-auto space-y-0 w-auto) dark:(bg-darknav )" >
+            <div css={[menu ? tw`right-0 ` : tw`-right-full`]} tw=" fixed z-20 transition-all md:space-x-5  bg-lightnav items-center w-screen h-screen space-y-10 md:(static flex h-auto space-y-0 w-auto) dark:(bg-darknav )" >
                 <div tw="(space-y-10 mt-10) md:(space-y-0 mt-0) " >
                     <NavItems onClick={onClick} to="/" >Home</NavItems>
                 </div>
