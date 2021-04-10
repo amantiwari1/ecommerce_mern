@@ -10,6 +10,7 @@ import {
 } from "./util/secrets";
 import { Response, Request, NextFunction } from "express";
 import auth from "./routes/auth.routes";
+import product from "./routes/product.routes";
 
 // API keys and Passport configuration
 import version from "./routes/version";
@@ -93,5 +94,7 @@ if (process.env.NODE_ENV === "production") {
 app.use("/api/version", version);
 app.use("/auth", auth); // version indicator
 // Add more routes like "/api/***" here
+app.use("/product", product); 
+
 
 export default app;
