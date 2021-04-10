@@ -14,7 +14,7 @@ const Footer = () => {
         },
         {
             name: "Contact",
-            to: "/"
+            to: "/ContactUs"
         },
         {
             name: "Wholesale",
