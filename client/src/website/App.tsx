@@ -9,7 +9,9 @@ import {
   ShoppingCart,
   SignIn,
   IngredientsList,
-  SignUp
+  SignUp,
+  ContactUs,
+  AddProduct
 } from './pages';
 
 import {
@@ -27,6 +29,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/cart" component={ShoppingCart} />
+        <Route exact path="/editProduct" component={AddProduct} />
+        <Route exact path="/ContactUs" component={ContactUs} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/collections/:CollectName/produdct/:productName" component={SingleProduct} />
