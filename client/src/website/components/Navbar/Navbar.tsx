@@ -73,6 +73,7 @@ const Navbar = () => {
             <div css={[menu ? tw`right-0 ` : tw`-right-full`]} tw=" fixed z-20 transition-all md:space-x-5  bg-lightnav items-center w-screen h-screen space-y-10 md:(static flex h-auto space-y-0 w-auto) dark:(bg-darknav )" >
                 <div tw="(space-y-10 mt-10) md:(space-y-0 mt-0) " >
                     <NavItems onClick={onClick} to="/" >Home</NavItems>
+                    <NavItems onClick={onClick} to="/editProduct" >Add Porduct</NavItems>
                 </div>
 
                 <DropdownTwin onTurnNav={onClick} name='Shop' navitems={ShopItems} />
@@ -85,7 +86,7 @@ const Navbar = () => {
                 </div>
 
                 <div tw="(space-y-10 mt-10) md:(space-y-0 mt-0) " >
-                    <NavItems onClick={onClick} to="/signin" >Sign In</NavItems>
+                    <Link onClick={onClick} tw="py-3 px-4  focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" to="/signin" >Sign In</Link>
                 </div>
 
             </div>
