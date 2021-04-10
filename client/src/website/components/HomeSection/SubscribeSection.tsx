@@ -10,7 +10,7 @@ const SubscribeSection = () => {
             <p tw="text-3xl text-center" >Sign-up and be the first to know when it comes to exclusive offers and new products!</p>
 
             <form tw="flex flex-col md:flex-row items-center  mx-auto" >
-                <input placeholder="your@email.com" tw="text-black   text-center h-14 w-80 rounded-md placeholder:() focus:outline-none mb-3 md:(mr-3 mb-0)" />
+                <input placeholder="your@email.com" tw="text-black   text-center h-14 w-80 rounded-md  focus:outline-none mb-3 md:(mr-3 mb-0)" />
                 <button tw="py-4   w-40 text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >SUBSCRIBE</button>
             </form>
         </div>
