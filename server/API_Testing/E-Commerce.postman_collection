@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "81e74155-75c2-4188-920e-577b048ab420",
+		"name": "E-Commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/product/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"testtestestwest\",\r\n\"description\": \"testtestestwest\",\r\n\"price\": \"testtestestwest\",\r\n\"featureImage\": \"testtestestwest\",\r\n\"ImageArray\": [\"testestest\"],\r\n\"category\": \"testtestestwest\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/product/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"product",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
