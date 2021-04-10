@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import mongoose, { Model, Schema, Document } from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 import UserDocument from "./UserDocument";
 export const userSchema = new Schema<UserDocument>(
   {
