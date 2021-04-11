@@ -1,12 +1,14 @@
-import { createStore,  Store, AnyAction } from "redux";
-import reducer from "../reducers";
-import AppState from "../models/client/AppState";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { configureStore } from '@reduxjs/toolkit'
+import ProductReducer from '../reducers/ProductSlice'
 
-const store: Store<AppState, AnyAction> = createStore(
-  reducer,
-  composeWithDevTools()
-);
+
+
+export const store = configureStore({
+  reducer: {
+    productReducer: ProductReducer
+  },
+})
+
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
