@@ -28,7 +28,20 @@ export const create: RequestHandler = async (
 
   try {
     const saved = await product.save();
-    return res.status(200).json(saved);
+    return res.status(201).json(saved);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getProducts: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const AllProduct = await ProductCollection.find();
+    return res.status(200).json(AllProduct);
   } catch (error) {
     return next(error);
   }

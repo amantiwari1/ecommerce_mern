@@ -9,5 +9,6 @@ const updateProductValidations = [
 const product: Router = Router();
 
 product.post("/create", updateProductValidations, productController.create);
+product.get("/gets", productController.getProducts);
 
 export default product;
