@@ -102,10 +102,10 @@ const SignleProduct = () => {
             <div>
             <h1 tw="capitalize text-3xl font-bold text-center pt-14">You may also like... </h1>
         <div tw="grid py-10 px-10  lg:grid-cols-4  md:(grid-cols-3 px-16) xl:(px-40) gap-8 justify-center">
-            <ProductCard />
+            {/* <ProductCard />
             <ProductCard /> 
             <ProductCard />
-            <ProductCard /> 
+            <ProductCard />  */}
             
         </div>
             </div>
