@@ -1,13 +1,9 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 import mongoose from "mongoose";
 import passport from "passport";
-import errorHandler from "errorhandler";
-import {
-  MONGODB_URI,
-  SERVER_PORT,
-  ORIGIN_URI,
-} from "./util/secrets";
+import { MONGODB_URI, SERVER_PORT, ORIGIN_URI } from "./util/secrets";
 import { Response, Request, NextFunction } from "express";
 import auth from "./routes/auth.routes";
 import product from "./routes/product.routes";
@@ -44,57 +40,20 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  console.log(
-    `[${req.method} ${req.originalUrl}] is called, body is ${JSON.stringify(
-      req.body
-    )}`
-  );
-  next();
-});
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.locals.user = req.user;
-  next();
-});
-if (process.env.NODE_ENV === "development") {
-  app.use(errorHandler());
-}
-app.use(cors())
-// Server rendering configuration
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("./client/build", { maxAge: 31557600000 }));
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    if (
-      req.originalUrl.startsWith("/api") 
-    
-    ) {
-      next();
-    } else {
-      const options = {
-        root: "./client/build/",
-        dotfiles: "deny",
-        headers: {
-          "x-timestamp": Date.now(),
-          "x-sent": true,
-        },
-      };
 
-      const fileName = "index.html";
-      res.sendFile(fileName, options, function (err) {
-        if (err) {
-          next(err);
-        } else {
-          console.log("Sent:", fileName);
-        }
-      });
-    }
-  });
-}
+app.use(morgan('combined'))
+ 
+app.use(cors());
+// Server rendering configuration
 
 app.use("/api/version", version);
 app.use("/auth", auth); // version indicator
-// Add more routes like "/api/***" here
-app.use("/product", product); 
+app.use("/product", product);
 
+
+app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
+  console.log("dfasfasdf",err);
+  return res.status(422).json({ message: err.message });
+});
 
 export default app;
