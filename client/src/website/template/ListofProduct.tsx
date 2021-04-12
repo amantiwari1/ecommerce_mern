@@ -16,8 +16,15 @@ const ListofProduct = () => {
     
 
     useEffect(() => {
-        dispatch(productActionCreator.getProducts())
-    }, [dispatch])
+
+        if (CollectName === "all") {
+            dispatch(productActionCreator.getProducts())
+        }
+
+        else {
+            dispatch(productActionCreator.getCategoryProducts(CollectName))
+        }
+    }, [dispatch,CollectName])
 
 
     return (<>
@@ -26,7 +33,7 @@ const ListofProduct = () => {
         
         {
             AllProduct.data.map(product => (
-                <ProductCard  price={product.price} title={product.title} img={product.featureImage} />
+                <ProductCard to={`/collections/${product.category}/product/${product.titleslug}`}  price={product.price} title={product.title} img={product.featureImage} />
             ))
         }
 
