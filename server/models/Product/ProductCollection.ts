@@ -4,6 +4,7 @@ import ProductDocument from './ProductDocument'
 export const ProductSchema = new Schema<ProductDocument>( 
     {
         title: { type: String, required: true },
+        titleslug: { type: String, required: true, unique: true},
         description: { type: String, required: true},
         price: { type: String, required: true},
         featureImage: { type: String, required: true},
