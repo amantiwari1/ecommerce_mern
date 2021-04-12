@@ -19,6 +19,9 @@ import {
   SingleProduct
 } from './template'
 import { Navbar, Footer } from './components'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
+
 
 
 function App() {
@@ -33,7 +36,7 @@ function App() {
         <Route exact path="/ContactUs" component={ContactUs} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/collections/:CollectName/produdct/:productName" component={SingleProduct} />
+        <Route exact path="/collections/:CollectName/product/:productName" component={SingleProduct} />
         <Route exact path="/pages/" component={ShoppingCart} />
         <Route exact path="/pages/faq" component={Faq} />
         <Route exact path="/pages/about" component={AboutUs} />
@@ -42,6 +45,16 @@ function App() {
         <Route exact path="/collections/:CollectName" component={ListofProduct} />
       </Switch>
       <Footer />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false} />
     </ThemeProvider>
   );
 }
