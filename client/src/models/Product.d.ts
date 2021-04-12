@@ -6,4 +6,5 @@ export default interface Product extends UnifiedModel {
     featureImage: string;
     ImageArray: string[];
     category: string;
+    titleslug: string;
 }
