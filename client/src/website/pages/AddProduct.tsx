@@ -14,13 +14,18 @@ const Label = tw.label` font-bold m-4`
 
 const AddProduct = () => {
 
-  const { register, handleSubmit, setValue, formState: { errors }} = useForm<Product>()
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<Product>()
   const dispatch = useAppDispatch()
   const onSubmit = (data: any) => {
 
+    
+
     try {
-      dispatch(productActionCreator.createProduct({...data, ImageArray: data.ImageArray.split('\n')}))
-      console.log(data); 
+      dispatch(productActionCreator.createProduct({
+        ...data, ImageArray: data.ImageArray.split('\n'), 
+        titleslug: data.title.toLowerCase().replace(/ /g, '-')
+          .replace(/[^\w-]+/g, '')
+      }))
 
     } catch (error) {
       console.log(error);
@@ -31,18 +36,18 @@ const AddProduct = () => {
     <form onSubmit={handleSubmit(onSubmit)} tw="flex flex-col  min-h-screen max-w-5xl mx-auto p-10 text-center " >
       <p>Add Product</p>
       <Label>Title</Label>
-      <Input {...register("title", {required: "this is Required"})} />
-      { errors.title && <p>{errors.title.message}</p>  }
+      <Input {...register("title", { required: "this is Required" })} />
+      { errors.title && <p>{errors.title.message}</p>}
       <Label>Price</Label>
-      <Input {...register("price", {required: "this is Required"})} />
-      { errors.price && <p>{errors.price.message}</p>  }
+      <Input {...register("price", { required: "this is Required" })} />
+      { errors.price && <p>{errors.price.message}</p>}
 
       <Label>Feature Image</Label>
-      <Input {...register("featureImage", {required: "this is Required"})} />
-      { errors.featureImage && <p>{errors.featureImage.message}</p>  }
+      <Input {...register("featureImage", { required: "this is Required" })} />
+      { errors.featureImage && <p>{errors.featureImage.message}</p>}
 
       <Label  >Category</Label>
-      <select  {...register("category", {required: "this is Required"})} tw=" text-black border w-40 p-5">
+      <select  {...register("category", { required: "this is Required" })} tw=" text-black border w-40 p-5">
         <option value="boba-kits">Boba Kits</option>
         <option value="powders">Powders</option>
         <option value="tea-leaves">Tea Leaves</option>
@@ -50,9 +55,9 @@ const AddProduct = () => {
       </select>
 
       <Label>ImageUrl</Label>
-      <textarea {...register("ImageArray", {required: "this is Required"})} tw="m-5 text-black border text-center focus:(outline-none ring-4)" />
-    
-      
+      <textarea {...register("ImageArray", { required: "this is Required" })} tw="m-5 text-black border text-center focus:(outline-none ring-4)" />
+
+
 
       {/* <div>
               <label tw="block text-sm font-medium text-gray-700">
@@ -84,11 +89,13 @@ const AddProduct = () => {
             const data = editor.getData();
             setValue("description", data)
           }}
-        /> 
+        />
       </div>
-      { errors.description && <p>{errors.description.message}</p>  }
+      { errors.description && <p>{errors.description.message}</p>}
+
 
       <button type="submit" tw="py-3 px-4 mt-3 inline-block focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >Add Product</button>
+      
     </form>
   )
 }
