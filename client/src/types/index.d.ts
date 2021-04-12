@@ -8,3 +8,5 @@ declare module '@ckeditor/ckeditor5-react' {
 
     
 }
+
+declare module 'react-html-parser'
