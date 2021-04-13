@@ -3,5 +3,15 @@ import  UserState from "../models/client/UserState";
 
 
 const initialState: UserState = {
-    currentUser: 
+    currentUser: undefined,
+    loading: false,
 }
+
+
+const UserSlice = createSlice({
+    name: 'user',
+    initialState: initialState,
+    reducers: {
+
+    }
+})
