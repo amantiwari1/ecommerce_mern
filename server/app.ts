@@ -7,6 +7,9 @@ import { MONGODB_URI, SERVER_PORT, ORIGIN_URI } from "./util/secrets";
 import { Response, Request, NextFunction } from "express";
 import auth from "./routes/auth.routes";
 import product from "./routes/product.routes";
+import isLogin from "./routes/isLogin.routes";
+import cookieParser from "cookie-parser";
+import passportMiddleware from './middlewares/passport'
 
 // API keys and Passport configuration
 import version from "./routes/version";
@@ -36,24 +39,33 @@ const app = express();
 app.set("server_port", SERVER_PORT);
 app.set("origin_uri", ORIGIN_URI);
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+app.use(cookieParser());
+
+app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(passportMiddleware);
 
-app.use(morgan('combined'))
- 
-app.use(cors());
+app.use(morgan("combined"));
+
 // Server rendering configuration
 
 app.use("/api/version", version);
 app.use("/auth", auth); // version indicator
 app.use("/product", product);
-
+app.use("/islogin", isLogin);
 
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
-  console.log("dfasfasdf",err);
-  return res.status(422).json({ message: err.message });
+  console.log( "this is error", err);
+  return res.status(500).json({ message: err.message });
 });
 
 export default app;
