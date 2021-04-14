@@ -3,6 +3,7 @@ import { SaveProductSuccess, ProductBegin, GetProductsSuccess , GetSingleProduct
 import { Dispatch } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
+
 const BASE_URL = "http://localhost:3001";
 
 const productActionCreator = {
@@ -26,14 +27,22 @@ const productActionCreator = {
   },
 
   getProducts: () => async (dispatch: Dispatch) => {
-    try {
-      dispatch(ProductBegin());
-      const AllProducts = await axios.get(`${BASE_URL}/product/gets`)
-      dispatch(GetProductsSuccess(AllProducts.data))
-    } catch (error) {
-      console.error(error);
-    }
+
+    await axios.get(`${BASE_URL}/product/gets`) 
+        .then(res => {  
+          dispatch(GetProductsSuccess(res.data))  
+        })    
+        .catch(err => {
+            if (err.response) {
+              toast.error(err.response.data.message)
+            } else {
+              toast.error("requested failed")
+
+            }
+        }); 
   },
+
+
   getCategoryProducts: (category: string) => async (dispatch: Dispatch) => {
     try {
       dispatch(ProductBegin());
