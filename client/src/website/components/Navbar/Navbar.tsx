@@ -6,6 +6,7 @@ import { GiHamburgerMenu, GiShoppingCart } from 'react-icons/gi'
 import { useState } from 'react'
 import DropdownTwin from '../Dropdown/Dropdown'
 import { Link } from 'react-router-dom'
+import { useAppSelector } from '../../../shared/reduxHooks'
 
 
 const ShopItems = [
@@ -19,7 +20,7 @@ const ShopItems = [
     },
     {
         name: "Tea Leaves",
-        to: "/collections/tea-leaves" 
+        to: "/collections/tea-leaves"
     },
     {
         name: "Must Haves",
@@ -50,7 +51,9 @@ const AboutItems = [
 
 const Navbar = () => {
     const [menu, setMenu] = useState(false)
-    const onClick = () => setMenu(!menu); 
+    const onClick = () => setMenu(!menu);
+
+    const isAuth = useAppSelector((state) => state.userReducer.isAuth)
     return (
         <nav tw=" top-0 p-3 md:px-10 lg:px-20 bg-lightnav space-y-1 text-center items-center h-10v md:( flex space-y-0 justify-between)   dark:(bg-darknav)" >
 
@@ -59,7 +62,7 @@ const Navbar = () => {
                 <h1 tw=" text-3xl  tracking-wider text-blue-300 font-bold" >Sammoo</h1>
                 <div tw="flex  items-center space-x-5" >
                     <Link to="/cart" >
-                    <GiShoppingCart tw="text-white text-2xl md:hidden cursor-pointer" />
+                        <GiShoppingCart tw="text-white text-2xl md:hidden cursor-pointer" />
                     </Link>
 
                     <div tw="md:hidden" >
@@ -79,14 +82,18 @@ const Navbar = () => {
                 <DropdownTwin onTurnNav={onClick} name='Shop' navitems={ShopItems} />
                 <DropdownTwin onTurnNav={onClick} name='About' navitems={AboutItems} />
                 <Link to="/cart" >
-                <GiShoppingCart tw="xs:hidden md:inline text-white text-2xl  cursor-pointer" />
+                    <GiShoppingCart tw="xs:hidden md:inline text-white text-2xl  cursor-pointer" />
                 </Link>
                 <div tw="xs:hidden  md:inline" >
                     <Toggle tw=" items-center pt-2 " />
                 </div>
 
                 <div tw="(space-y-10 mt-10) md:(space-y-0 mt-0) " >
-                    <Link onClick={onClick} tw="py-3 px-4  focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" to="/signin" >Sign In</Link>
+
+                    {
+                        !isAuth ? <Link onClick={onClick} tw="py-3 px-4  focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" to="/signin" >Sign In</Link> :
+                            <NavItems onClick={onClick}  to="/Logout" >Log out</NavItems>
+                    }
                 </div>
 
             </div>
