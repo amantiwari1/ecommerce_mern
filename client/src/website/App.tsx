@@ -21,10 +21,21 @@ import {
 import { Navbar, Footer } from './components'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify'
+import { useEffect } from 'react';
+import { useAppDispatch } from '../shared/reduxHooks';
+import userActionCreator from '../actions/userAction';
 
 
 
 function App() {
+
+    const dispatch = useAppDispatch()
+
+   useEffect(() => {
+    dispatch(userActionCreator.isLogin())
+   }, [dispatch])
+   
+
   return (
     <ThemeProvider>
       <GlobalStyles />
