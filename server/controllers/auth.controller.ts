@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import UserDocument from "../models/User/UserDocument";
 import UserCollection from "../models/User/UserCollection";
 import jwt from "jsonwebtoken";
-import {JWT_SECRET} from "../util/secrets";
+import { JWT_SECRET } from "../util/secrets";
 
 const createToken = (user: UserDocument) => {
   return jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
@@ -12,16 +12,17 @@ const createToken = (user: UserDocument) => {
 
 export const signUp = async (
   req: Request,
-  res: Response
+  res: Response, 
+  next: NextFunction
 ): Promise<Response> => {
   if (!req.body.email || !req.body.password) {
-    return res.status(400).json({ msg: "Please Send your email ans password" });
+    throw new Error("Please Send your email ans password");
   }
 
   const user = await UserCollection.findOne({ email: req.body.email });
 
   if (user) {
-    return res.status(400).json({ msg: " the user already exists" });
+    throw new Error(" the user already exists Please Sign In");
   }
 
   const newUser = new UserCollection(req.body);
@@ -31,23 +32,42 @@ export const signUp = async (
 
 export const signIn = async (req: Request, res: Response) => {
   if (!req.body.email || !req.body.password) {
-    return res.status(400).json({ msg: "Please Send your email ans password" });
+    throw new Error("Please Send your email ans password");
   }
 
   const user = await UserCollection.findOne({ email: req.body.email });
 
   if (!user) {
-    return res.status(400).json({ msg: "the user  doesn't exists" });
+    throw new Error("the user  doesn't exists");
   }
 
   const isMatch = await user.comparePassword(req.body.password);
 
   if (isMatch) {
-    return res.status(200).json({ token: createToken(user) });
+    return res
+      .cookie("jwt", createToken(user), {
+        httpOnly: true,
+        secure: false,
+        sameSite: true,
+        maxAge: 86400 //--> SET TO TRUE ON PRODUCTION
+      })
+      .status(200)
+      .json({
+        message: "You have logged in :D",
+      });
   }
 
-  return res.status(400).json({
-    msg: `the email or password are incorrct`,
-  });
+  throw new Error("the email or password are incorrct");
+};
 
-}
+export const logout = (req: Request, res: Response) => {
+  if (req.cookies["jwt"]) {
+    res.clearCookie("jwt").status(200).json({
+      message: "You have logged out",
+    });
+  } else {
+    res.status(401).json({
+      error: "Invalid jwt",
+    });
+  }
+};
