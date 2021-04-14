@@ -3,8 +3,10 @@
 import tw from 'twin.macro'
 import { useForm } from 'react-hook-form'
 import { Input, FormWrapper } from "../components"
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
+import userActionCreator from '../../actions/userAction'
+import { useAppDispatch } from '../../shared/reduxHooks'
 
 
 
@@ -17,8 +19,13 @@ type Inputs = {
 
 const SignIn = () => {
 
+    const history = useHistory()
+    const dispatch = useAppDispatch()
+
+
     const onSubmit = (data: any) => {
-        alert(JSON.stringify(data));
+        dispatch(userActionCreator.login({data: data, history: history}))
+
     };
 
 
