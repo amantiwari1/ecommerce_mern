@@ -13,8 +13,10 @@ export const userSchema = new Schema<UserDocument>(
 
 userSchema.methods.comparePassword = async function (
     password: string
-  ): Promise<Boolean> {
-    return await bcrypt.compare(password, this.password);
+  ): Promise<Boolean | undefined> {
+    if (this.password) {
+      return await bcrypt.compare(password, this.password);
+    }
   };
 
   
