@@ -6,7 +6,8 @@ import { GiHamburgerMenu, GiShoppingCart } from 'react-icons/gi'
 import { useState } from 'react'
 import DropdownTwin from '../Dropdown/Dropdown'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../../shared/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../shared/reduxHooks'
+import userActionCreator from '../../../actions/userAction'
 
 
 const ShopItems = [
@@ -52,8 +53,8 @@ const AboutItems = [
 const Navbar = () => {
     const [menu, setMenu] = useState(false)
     const onClick = () => setMenu(!menu);
-
-    const isAuth = useAppSelector((state) => state.userReducer.isAuth)
+    const dispatch = useAppDispatch()
+    const {isAuth, currentUser} = useAppSelector((state) => state.userReducer)
     return (
         <nav tw=" top-0 p-3 md:px-10 lg:px-20 bg-lightnav space-y-1 text-center items-center h-10v md:( flex space-y-0 justify-between)   dark:(bg-darknav)" >
 
@@ -76,7 +77,10 @@ const Navbar = () => {
             <div css={[menu ? tw`right-0 ` : tw`-right-full`]} tw=" fixed z-20 transition-all md:space-x-5  bg-lightnav items-center w-screen h-screen space-y-10 md:(static flex h-auto space-y-0 w-auto) dark:(bg-darknav )" >
                 <div tw="(space-y-10 mt-10) md:(space-y-0 mt-0) " >
                     <NavItems onClick={onClick} to="/" >Home</NavItems>
+
+                    {currentUser.isAdmin &&
                     <NavItems onClick={onClick} to="/editProduct" >Add Porduct</NavItems>
+                    }
                 </div>
 
                 <DropdownTwin onTurnNav={onClick} name='Shop' navitems={ShopItems} />
@@ -92,7 +96,10 @@ const Navbar = () => {
 
                     {
                         !isAuth ? <Link onClick={onClick} tw="py-3 px-4  focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" to="/signin" >Sign In</Link> :
-                            <NavItems onClick={onClick}  to="/Logout" >Log out</NavItems>
+                            <button tw="md:inline-flex inline-block  flex-wrap py-1.5 px-4 items-center text-white justify-center rounded-xl text-center cursor-pointer transition ease-out delay-150 duration-300 hover:( bg-gray-500 ) dark:( hover:( bg-gray-600 ) text-white)" onClick={() => {
+                                onClick()
+                                dispatch(userActionCreator.logout())
+                            }}  >Log out</button>
                     }
                 </div>
 
