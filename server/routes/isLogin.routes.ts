@@ -9,7 +9,7 @@ isLogin.get(
   "/verify",
   passport.authenticate("jwt", { session: false }),
   use((req: Request, res: Response) => {
-      res.status(200).json({message: true})
+      res.status(200).json({message: true, data: req.user})
   })
 );
 
