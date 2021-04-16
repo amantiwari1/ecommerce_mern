@@ -2,6 +2,7 @@ import {
   JwtFromRequestFunction,
   Strategy,
   StrategyOptions,
+  VerifiedCallback,
 } from "passport-jwt";
 import { NextFunction, Request } from "express";
 import { JWT_SECRET } from "../util/secrets";
@@ -25,7 +26,17 @@ const opts: StrategyOptions = {
   secretOrKey: JWT_SECRET,
 };
 
-export default new Strategy(opts, async (payload, done) => {
+interface User {
+    id : string;
+    email : string | undefined;
+    isAdmin: boolean;
+    cart: Array<{}>;
+}
+
+type verify = (error: any, user?: User | boolean, info?: any) => void;
+
+
+export default new Strategy(opts, async (payload, done:verify ) => {
   const user = await UserCollection.findById(payload.id);
 
   try {
@@ -33,10 +44,10 @@ export default new Strategy(opts, async (payload, done) => {
       const { expiration } = payload;
 
       if (Date.now() > expiration) {
-        done("Unauthorized", false);
+        done("Unauthorized", false); 
       }
 
-      return done(undefined, { id: user._id, email: user.email });
+      return done(undefined, { id: user._id, email: user.email, isAdmin: user.isAdmin, cart: user.cart });
     }
 
     return done("Unauthorized", false);
