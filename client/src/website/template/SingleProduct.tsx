@@ -6,6 +6,7 @@ import { ProductCard } from '../components'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
 import { BsPlusCircle } from 'react-icons/bs'
 import productActionCreator from '../../actions/productAction'
+import cartActionCreator from '../../actions/cartAction'
 import ReactHtmlParser from 'react-html-parser';  
  
 
@@ -21,17 +22,19 @@ const SignleProduct = () => {
 
     const { productName } = useParams<{ productName: string }>()
     const dispatch = useAppDispatch()
-    const { title, ImageArray, description, featureImage } = useAppSelector((state) => state.productReducer.SingleProduct)
-
+    const { title, ImageArray, description, featureImage, _id } = useAppSelector((state) => state.productReducer.SingleProduct)
+    
     const [ChangeImage, setChangeImage] = useState("")
+    const [Quality, setQuality] = useState(1)
 
     useEffect(() => {
         dispatch(productActionCreator.getProduct(productName))
         setChangeImage(featureImage)
     }, [dispatch, productName, featureImage])
 
-    console.log(title );
-    console.log(title !== "");
+    const addCartHandler = () => {
+        dispatch(cartActionCreator.addCart({ProductId: _id, Quality: Quality}))
+    }
     
 
 
@@ -71,11 +74,11 @@ const SignleProduct = () => {
                         <div tw=" flex my-5 justify-center md:justify-start items-center space-x-3"  >
                             <label>Quantity</label>
 
-                            <BsPlusCircle tw="cursor-pointer" />
-                            <p >5</p>
-                            <AiOutlineMinusCircle tw="cursor-pointer" />
+                            <BsPlusCircle onClick={() => setQuality(Quality+1)} tw="cursor-pointer" />
+                            <p >{Quality}</p>
+                            <AiOutlineMinusCircle onClick={() => setQuality(Quality-1)} tw="cursor-pointer" />
                         </div>
-                        <button tw="py-4 mt-8  w-full text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >Add to Cart</button>
+                        <button onClick={addCartHandler}tw="py-4 mt-8  w-full text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >Add to Cart</button>
                         <button tw="py-4  my-8 w-full text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >Buy It Now</button>
 
                         <div tw="prose dark:(prose-dark)" >{ReactHtmlParser(description)}</div>
