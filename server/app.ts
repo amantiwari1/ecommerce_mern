@@ -7,6 +7,7 @@ import { MONGODB_URI, SERVER_PORT, ORIGIN_URI } from "./util/secrets";
 import { Response, Request, NextFunction } from "express";
 import auth from "./routes/auth.routes";
 import product from "./routes/product.routes";
+import cart from "./routes/cart.routes";
 import isLogin from "./routes/isLogin.routes";
 import cookieParser from "cookie-parser";
 import passportMiddleware from './middlewares/passport'
@@ -54,7 +55,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(passportMiddleware);
 
-app.use(morgan("combined"));
+app.use(morgan("common"));
 
 // Server rendering configuration
 
@@ -62,10 +63,10 @@ app.use("/api/version", version);
 app.use("/auth", auth); // version indicator
 app.use("/product", product);
 app.use("/islogin", isLogin);
+app.use("/cart", cart);
 
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
-  console.log( "this is error", err);
-  return res.status(500).json({ message: err.message });
+  return res.status(401).json({ message: err.message });
 });
 
 export default app;
