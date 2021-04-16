@@ -2,8 +2,20 @@
 // eslint-disable-next-line
 import tw from 'twin.macro'
 import ProductCart from '../components/ProductCart/ProductCart'
+import CartActionCreator from '../../actions/cartAction'
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../shared/reduxHooks'
 
 const ShoppingCart = () => {
+
+    const dispatch = useAppDispatch()
+    const allCart = useAppSelector(state=> state.cartReducer.data )
+
+    useEffect(() => {
+        dispatch(CartActionCreator.getCarts())
+    }, [dispatch])
+
+
     return (
         <div tw="px-8 py-24" > 
             <div tw=" max-w-5xl  mx-auto my-0 space-y-10 " >
@@ -17,10 +29,16 @@ const ShoppingCart = () => {
                     <p>Quality</p>
                     <p tw="text-right" >Total</p>
                 </div>
-             <ProductCart />
-             <ProductCart />
-             <ProductCart />
-             <ProductCart />
+              {
+                  allCart.map(cart => (
+                      <ProductCart
+                      title={cart.title}
+                      price={cart.price}
+                      quality={cart.quality}
+                      featureImage={cart.featureImage}
+                      />
+                  ))
+              }
              <div tw="flex flex-col items-end" >
                 <p tw="font-bold py-5" >Total Price:  $500</p>
                 <button tw="py-4   w-36 text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >CHECKOUT</button>
