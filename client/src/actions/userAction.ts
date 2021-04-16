@@ -26,9 +26,9 @@ const userActionCreator = {
   login: (user: { data: User; history: any }) => async (dispatch: Dispatch) => {
     await axios
       .post(`${BASE_URL}/auth/signin`, user.data)
-      .then(() => {
+      .then((res) => {
         toast.success("Successfully");
-        dispatch(addCurrentUser());
+        dispatch(addCurrentUser(res.data));
         user.history.push("/");
       })
       .catch((err) => {
@@ -41,16 +41,26 @@ const userActionCreator = {
   ) => {
     await axios
       .get(`${BASE_URL}/islogin/verify`)
-      .then(() => {
-        toast.success("Successfully");
+      .then((res) => {
+        dispatch(addCurrentUser(res.data.data));
         dispatch(isLogin(true));
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
         dispatch(isLogin(false));
-
       });
   },
+
+  logout: () => async (dispatch: Dispatch) => {
+    await axios
+    .get(`${BASE_URL}/auth/logout`)
+    .then(() => {
+      toast.success("Successfully logged out");
+      dispatch(isLogin(false));
+    })
+    .catch((err) => {
+      dispatch(isLogin(false));
+    });
+  }
 };
 
 export default userActionCreator;
