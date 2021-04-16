@@ -49,12 +49,10 @@ export const signIn = async (req: Request, res: Response) => {
         httpOnly: true,
         secure: false,
         sameSite: true,
-        maxAge: 86400 //--> SET TO TRUE ON PRODUCTION
+        expires: new Date(Date.now() + 7200000)
       })
       .status(200)
-      .json({
-        message: "You have logged in :D",
-      });
+      .json({name: user.name, email: user.email, isAdmin: user.isAdmin, cart: user.cart});
   }
 
   throw new Error("the email or password are incorrct");
@@ -71,3 +69,5 @@ export const logout = (req: Request, res: Response) => {
     });
   }
 };
+
+
