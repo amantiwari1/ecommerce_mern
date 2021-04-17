@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../shared/reduxHooks'
 const ShoppingCart = () => {
 
     const dispatch = useAppDispatch()
-    const allCart = useAppSelector(state=> state.cartReducer.data )
+    const {data, fullTotal} = useAppSelector(state=> state.cartReducer)
 
     useEffect(() => {
         dispatch(CartActionCreator.getCarts())
@@ -28,19 +28,21 @@ const ShoppingCart = () => {
                     <p>Price</p>
                     <p>Quality</p>
                     <p tw="text-right" >Total</p>
-                </div>
+                </div> 
               {
-                  allCart.map(cart => (
+                  data.map(cart => ( 
                       <ProductCart
                       title={cart.title}
                       price={cart.price}
-                      quality={cart.quality}
+                      quality={cart.quality}  
                       featureImage={cart.featureImage}
+                      id={cart.id}
+                      total={cart.total}
                       />
                   ))
               }
              <div tw="flex flex-col items-end" >
-                <p tw="font-bold py-5" >Total Price:  $500</p>
+                <p tw="font-bold py-5" >Total Price:  ${fullTotal}</p>
                 <button tw="py-4   w-36 text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >CHECKOUT</button>
              </div>
             </div>
