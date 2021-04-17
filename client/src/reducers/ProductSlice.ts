@@ -12,7 +12,7 @@ const initialState: ProductState = {
     category: "",
     description: "",
     featureImage: "",
-    price: "",
+    price: 0,
     titleslug: "",
   },
 };
@@ -43,14 +43,19 @@ export const productSlice = createSlice({
         SingleProduct: { ...action.payload },
       };
     },
+    SetEmptyProduct: (state) => {
+      state.SingleProduct = initialState.SingleProduct
+    }
   },
 });
+
 
 export const {
   SaveProductSuccess,
   ProductBegin,
   GetProductsSuccess,
   GetSingleProductSuccess,
+  SetEmptyProduct
 } = productSlice.actions;
 
 export default productSlice.reducer;
