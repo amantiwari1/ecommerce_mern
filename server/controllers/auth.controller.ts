@@ -3,6 +3,8 @@ import UserDocument from "../models/User/UserDocument";
 import UserCollection from "../models/User/UserCollection";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../util/secrets";
+import errorMessage from '../util/errorMessage'
+
 
 const createToken = (user: UserDocument) => {
   return jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
@@ -16,13 +18,13 @@ export const signUp = async (
   next: NextFunction
 ): Promise<Response> => {
   if (!req.body.email || !req.body.password) {
-    throw new Error("Please Send your email ans password");
+    errorMessage.invalid("Please Send your email ans password");
   }
 
   const user = await UserCollection.findOne({ email: req.body.email });
 
   if (user) {
-    throw new Error(" the user already exists Please Sign In");
+    errorMessage.invalid(" the user already exists Please Sign In");
   }
 
   const newUser = new UserCollection(req.body);
@@ -32,13 +34,13 @@ export const signUp = async (
 
 export const signIn = async (req: Request, res: Response) => {
   if (!req.body.email || !req.body.password) {
-    throw new Error("Please Send your email ans password");
+    errorMessage.invalid("Please Send your email ans password");
   }
 
   const user = await UserCollection.findOne({ email: req.body.email });
 
   if (!user) {
-    throw new Error("the user  doesn't exists");
+    return errorMessage.invalid("the user  doesn't exists");
   }
 
   const isMatch = await user.comparePassword(req.body.password);
@@ -64,9 +66,7 @@ export const logout = (req: Request, res: Response) => {
       message: "You have logged out",
     });
   } else {
-    res.status(401).json({
-      error: "Invalid jwt",
-    });
+    errorMessage.invalid("invalid jwt")
   }
 };
 
