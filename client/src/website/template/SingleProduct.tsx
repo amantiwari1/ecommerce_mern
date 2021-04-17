@@ -8,10 +8,10 @@ import { BsPlusCircle } from 'react-icons/bs'
 import productActionCreator from '../../actions/productAction'
 import cartActionCreator from '../../actions/cartAction'
 import ReactHtmlParser from 'react-html-parser';  
- 
+ import {Link} from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../shared/reduxHooks'
-import { useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 
 
 
@@ -22,7 +22,8 @@ const SignleProduct = () => {
 
     const { productName } = useParams<{ productName: string }>()
     const dispatch = useAppDispatch()
-    const { title, ImageArray, description, featureImage, _id } = useAppSelector((state) => state.productReducer.SingleProduct)
+    const history = useHistory()
+    const { title, ImageArray, description, featureImage, _id, titleslug } = useAppSelector((state) => state.productReducer.SingleProduct)
     
     const [ChangeImage, setChangeImage] = useState("")
     const [Quality, setQuality] = useState(1)
@@ -33,7 +34,7 @@ const SignleProduct = () => {
     }, [dispatch, productName, featureImage])
 
     const addCartHandler = () => {
-        dispatch(cartActionCreator.addCart({ProductId: _id, Quality: Quality}))
+        dispatch(cartActionCreator.addCart({data: {ProductId: _id, Quality: Quality}, history: history   }))
     }
     
 
@@ -68,6 +69,8 @@ const SignleProduct = () => {
                     <div tw=" ">
                         <h1 tw=" text-3xl md:text-5xl font-bold " >{title}</h1>
                         <p tw=" text-xl md:text-3xl " >$25.00</p>
+
+                        <Link to={`/editProduct?edit=true&id=${titleslug}`} > Edit this Product </Link>
                     </div>
 
                     <div tw="   ">
