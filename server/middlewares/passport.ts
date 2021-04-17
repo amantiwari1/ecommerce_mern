@@ -7,6 +7,7 @@ import {
 import { NextFunction, Request } from "express";
 import { JWT_SECRET } from "../util/secrets";
 import UserCollection from "../models/User/UserCollection";
+import errorMessage from '../util/errorMessage'
 
 const cookieExtractor: JwtFromRequestFunction = (req: Request) => {
   let jwt = null;
@@ -15,7 +16,7 @@ const cookieExtractor: JwtFromRequestFunction = (req: Request) => {
     jwt = req.cookies["jwt"];
 
     if (!jwt) {
-      throw new Error("Not Authenticated");
+      errorMessage.unauthorized()
     }
   }
   return jwt;
