@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SaveProductSuccess, ProductBegin, GetProductsSuccess , GetSingleProductSuccess} from "../reducers/ProductSlice";
+import { SaveProductSuccess, ProductBegin, GetProductsSuccess , GetSingleProductSuccess, SetEmptyProduct} from "../reducers/ProductSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
@@ -60,6 +60,10 @@ const productActionCreator = {
     .catch(err => {  
       toast.error(err.response.data.message) 
     }); 
+  },
+
+  setProductEmpty: () => async (dispatch: Dispatch) => {
+    dispatch(SetEmptyProduct())
   }
 
 
