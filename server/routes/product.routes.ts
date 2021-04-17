@@ -14,5 +14,6 @@ product.post("/create", updateProductValidations, use(productController.create) 
 product.get("/gets",passport.authenticate('jwt', { session: false }) , use(productController.getProducts));
 product.get("/getsCategories", use(productController.getProductCategory));
 product.get("/get/:titleslug", use(productController.getProduct));
+product.post("/update", use(productController.updateProduct));
 
 export default product; 
