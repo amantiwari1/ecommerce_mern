@@ -1,9 +1,10 @@
 export default interface  ProductCartInterface {
     id?: string;
-    quality: string;
+    quality: number;
     title: string;
     titleslug?: string;
     featureImage: string;
-    price: string;
+    price: number;
+    total: number;
 }
  

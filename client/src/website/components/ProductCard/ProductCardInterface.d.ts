@@ -1,6 +1,6 @@
 export default interface ProductCardInterface {
     title: string;
-    price: string;
+    price: number;
     img: string;
     to: string;
 }
