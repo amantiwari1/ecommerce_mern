@@ -4,25 +4,27 @@ import tw from 'twin.macro'
 import { useForm } from 'react-hook-form'
 import Product from "../../models/Product"
 import productActionCreator from '../../actions/productAction'
-import { useAppDispatch } from '../../shared/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../shared/reduxHooks'
+import queryString from 'query-string'
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Input = tw.input`w-full  border   text-center text-black text-3xl focus:(outline-none ring-4)`
 const Label = tw.label` font-bold m-4`
 
 const AddProduct = () => {
+  const { search } = useLocation()
+  const values = queryString.parse(search)
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<Product>()
+  const { register, handleSubmit, setValue, formState: { errors }, getValues } = useForm<Product>()
   const dispatch = useAppDispatch()
   const onSubmit = (data: any) => {
-
-    
-
     try {
       dispatch(productActionCreator.createProduct({
-        ...data, ImageArray: data.ImageArray.split('\n'), 
+        ...data, ImageArray: data.ImageArray.split('\n'),
         titleslug: data.title.toLowerCase().replace(/ /g, '-')
           .replace(/[^\w-]+/g, '')
       }))
@@ -31,6 +33,44 @@ const AddProduct = () => {
       console.log(error);
     }
   }
+
+
+  const EditProductDetails = useAppSelector((state) => state.productReducer.SingleProduct)
+
+
+
+  useEffect(() => {
+
+    if (values.edit) {
+
+      dispatch(productActionCreator.getProduct(values.id as string))
+      setValue("description", EditProductDetails.description)
+      setValue("title", EditProductDetails.title)
+      setValue("price", EditProductDetails.price)
+      setValue("category", EditProductDetails.category)
+      setValue("ImageArray", EditProductDetails.ImageArray)
+      setValue("featureImage", EditProductDetails.featureImage)
+    } else {
+      dispatch(productActionCreator.setProductEmpty())
+      setValue("description", "")
+      setValue("title", "")
+      setValue("price", 0)
+      setValue("category", "")
+      setValue("ImageArray", [])
+      setValue("featureImage", "") 
+    }
+
+    console.log(values.edit);
+    
+
+
+  }, [values.edit])
+
+
+
+
+
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} tw="flex flex-col  min-h-screen max-w-5xl mx-auto p-10 text-center " >
@@ -89,13 +129,16 @@ const AddProduct = () => {
             const data = editor.getData();
             setValue("description", data)
           }}
+
+          data={getValues("description")}
+
         />
       </div>
       { errors.description && <p>{errors.description.message}</p>}
 
 
       <button type="submit" tw="py-3 px-4 mt-3 inline-block focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" >Add Product</button>
-      
+
     </form>
   )
 }
