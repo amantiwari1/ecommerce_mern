@@ -28,8 +28,18 @@ const userSlice = createSlice({
 
         addCartData: (state, action) => {
 
-            state.currentUser.cart.push(action.payload)
-            // return {...state, currentUser: {...state.currentUser, cart: action.payload}}
+            let isExistCard = false
+
+            for (let cart of state.currentUser.cart) {
+                if (cart.ProductId === action.payload.ProductId) {
+                    cart.Quality += action.payload.Quality
+                    isExistCard = true
+                }
+            }
+
+            if( !isExistCard ) {
+                state.currentUser.cart.push(action.payload)
+            }
         }
     }
 })
