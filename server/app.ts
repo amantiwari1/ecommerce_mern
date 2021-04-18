@@ -14,6 +14,7 @@ import passportMiddleware from './middlewares/passport'
 
 // API keys and Passport configuration
 import version from "./routes/version";
+import path from "path";
 
 // Connect to MongoDB
 const mongoUrl: string = MONGODB_URI as string;
@@ -59,6 +60,7 @@ app.use(morgan("common"));
 
 // Server rendering configuration
 
+app.use('/images', express.static(path.join(__dirname,'images')))
 app.use("/api/version", version);
 app.use("/auth", auth); // version indicator
 app.use("/product", product);
