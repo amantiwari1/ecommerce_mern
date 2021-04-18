@@ -24,13 +24,14 @@ const SignleProduct = () => {
     const dispatch = useAppDispatch()
     const history = useHistory()
     const { title, ImageArray, description, featureImage, _id, titleslug } = useAppSelector((state) => state.productReducer.SingleProduct)
+  const isAdmin = useAppSelector((state) => state.userReducer.currentUser.isAdmin)
     
     const [ChangeImage, setChangeImage] = useState("")
     const [Quality, setQuality] = useState(1)
 
     useEffect(() => {
         dispatch(productActionCreator.getProduct(productName))
-        setChangeImage(featureImage)
+        setChangeImage(`http://localhost:3001/images/${featureImage}`)
     }, [dispatch, productName, featureImage])
 
     const addCartHandler = () => {
@@ -40,6 +41,9 @@ const SignleProduct = () => {
 
 
 
+    const onDeleteProduct = (id: string) => {
+        dispatch(productActionCreator.deleteProduct({id: id, history: history}))
+    }
 
 
     return (
@@ -54,11 +58,11 @@ const SignleProduct = () => {
                         <img tw="w-full h-auto" src={ChangeImage} alt="" />
 
                         <div tw="grid grid-cols-5   lg:grid-cols-8 gap-2 mt-2" >
-                            <img tw="w-full h-auto" src="http://via.placeholder.com/400x400" alt="" />
 
+                            <img  onClick={() => setChangeImage(`http://localhost:3001/images/${featureImage}`)} tw="w-full cursor-pointer h-auto" src={`http://localhost:3001/images/${featureImage}`} alt="" />
                             {
                                 ImageArray.map((x, i) => (
-                                    <img key={i} onClick={() => setChangeImage(x)} tw="w-full cursor-pointer h-auto" src={x} alt="" />
+                                    <img key={i} onClick={() => setChangeImage(`http://localhost:3001/images/${x}`)} tw="w-full cursor-pointer h-auto" src={`http://localhost:3001/images/${x}`} alt="" /> 
 
                                 ))
                             }
@@ -69,8 +73,15 @@ const SignleProduct = () => {
                     <div tw=" ">
                         <h1 tw=" text-3xl md:text-5xl font-bold " >{title}</h1>
                         <p tw=" text-xl md:text-3xl " >$25.00</p>
-
+                            {
+                        isAdmin && <div tw="flex mt-4 space-x-3.5 justify-start" > 
+                        
                         <Link to={`/editProduct?edit=true&id=${titleslug}`} > Edit this Product </Link>
+
+                            <button onClick={() =>onDeleteProduct(_id)} >Delete</button>
+                                 
+                         </div>
+                            }
                     </div>
 
                     <div tw="   ">

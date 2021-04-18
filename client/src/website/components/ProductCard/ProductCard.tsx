@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 const ProductCard = ( { to, title, price, img }: ProductCardInterface )  => {
     return (
         <Link to={to} tw="space-y-3 ">
-            <img tw="w-full h-auto" src={img} alt="" /> 
+            <img tw="w-full h-auto" src={`http://localhost:3001/images/${img}`} alt="" /> 
 
             <p tw="text-center text-3xl font-bold" >{title}</p>
 

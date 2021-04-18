@@ -24,7 +24,7 @@ const ProductCart = ( {id, quality, title, featureImage, price, total} : Product
     return (
         <div tw="grid  grid-cols-4 gap-5 md:(grid-cols-6 gap-2) py-5 md:items-center ">
             <div tw=" flex col-span-4 md:col-span-3 space-x-7" >
-                <img tw="h-24 w-24  " src={featureImage} alt="" />
+                <img tw="h-24 w-24  " src={`http://localhost:3001/images/${featureImage}`} alt="" />
                 <div >
                     <p>{title}</p> 
                     
