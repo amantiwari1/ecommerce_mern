@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SaveProductSuccess, ProductBegin, GetProductsSuccess , GetSingleProductSuccess, SetEmptyProduct} from "../reducers/ProductSlice";
+import { SaveProductSuccess, UpdateProductData, ProductBegin, GetProductsSuccess , GetSingleProductSuccess, SetEmptyProduct} from "../reducers/ProductSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
@@ -20,6 +20,8 @@ const productActionCreator = {
         })    
         .catch(err => {  
           toast.error(err.response.data.message)
+          console.log(err.response.data.message);
+          
         }); 
      
   
@@ -63,8 +65,38 @@ const productActionCreator = {
   },
 
   setProductEmpty: () => async (dispatch: Dispatch) => {
+
+    
     dispatch(SetEmptyProduct())
+  },
+  updateProduct: (data: any) => async (dispatch: Dispatch) => {
+
+    await axios.post(`${BASE_URL}/product/update/`, data.data) 
+    .then(res => {  
+      dispatch(UpdateProductData(res.data))
+      data.history.go(-1);
+    })    
+    .catch(err => {  
+      toast.error(err.response.data.message) 
+      
+    }); 
+  },
+  deleteProduct: (data: any) => async (dispatch: Dispatch) => {
+    
+    await axios.delete(`${BASE_URL}/product/delete/${data.id}`) 
+    .then(() => {  
+      dispatch(SetEmptyProduct())
+      toast.success("deleled")
+      data.history.go(-1);
+    })    
+    .catch(err => {  
+      console.log(err);
+      toast.error(err.response.data.message) 
+      
+    }); 
   }
+
+  
 
 
 };
