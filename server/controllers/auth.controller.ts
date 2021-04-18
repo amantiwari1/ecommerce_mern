@@ -15,7 +15,6 @@ const createToken = (user: UserDocument) => {
 export const signUp = async (
   req: Request,
   res: Response, 
-  next: NextFunction
 ): Promise<Response> => {
   if (!req.body.email || !req.body.password) {
     errorMessage.invalid("Please Send your email ans password");
