@@ -20,17 +20,20 @@ const storage = multer.diskStorage({
       req.body.folder = Date.now();
     }
 
-    const dir = path.join(__dirname, "..", "images", req.body.folder.toString());
+    const dir = path.join(
+      __dirname,
+      "..",
+      "images",
+      req.body.folder.toString()
+    );
 
-    fs.exists(dir, (exist) => {
-      if (!exist) {
-        return fs.mkdir(dir, (error) => cb(error, dir));
-      }
-      return cb(null, dir);
-    });
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    return cb(null, dir);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now().toString() + path.extname(file.originalname) );
+    cb(null, Date.now().toString() + path.extname(file.originalname));
   },
 });
 
@@ -42,7 +45,7 @@ const fileFilter = (
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
     cb(null, false);
   }
-  cb(null, true); 
+  cb(null, true);
 };
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
