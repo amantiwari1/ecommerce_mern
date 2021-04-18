@@ -45,8 +45,13 @@ export const productSlice = createSlice({
     },
     SetEmptyProduct: (state) => {
       state.SingleProduct = initialState.SingleProduct
-    }
+    },
+    UpdateProductData: (state, action) => {
+      state.SingleProduct = action.payload
+    },
   },
+
+
 });
 
 
@@ -55,7 +60,8 @@ export const {
   ProductBegin,
   GetProductsSuccess,
   GetSingleProductSuccess,
-  SetEmptyProduct
+  SetEmptyProduct,
+  UpdateProductData
 } = productSlice.actions;
 
 export default productSlice.reducer;
