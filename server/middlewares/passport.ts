@@ -2,9 +2,8 @@ import {
   JwtFromRequestFunction,
   Strategy,
   StrategyOptions,
-  VerifiedCallback,
 } from "passport-jwt";
-import { NextFunction, Request } from "express";
+import {  Request } from "express";
 import { JWT_SECRET } from "../util/secrets";
 import UserCollection from "../models/User/UserCollection";
 import errorMessage from '../util/errorMessage'
