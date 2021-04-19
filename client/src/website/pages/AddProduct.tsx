@@ -22,8 +22,9 @@ const AddProduct = () => {
 
   const { register, handleSubmit, setValue, formState: { errors }, getValues } = useForm<Product>()
   const dispatch = useAppDispatch()
+  const EditProductDetails = useAppSelector((state) => state.productReducer.SingleProduct)
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: Product) => {
 
 
 
@@ -33,31 +34,34 @@ const AddProduct = () => {
 
       const formData = new FormData()
 
-      console.log(data.ImageArray[0]);
-      
 
-      formData.append("featureImage", data.featureImage)
+      for (let file of data.ImageArray) {
+      formData.append("ImageArray", file)
+      }
+
+      if (data.featureImage) {
+
+        formData.append("featureImage", data.featureImage[0])
+      }
+      
+      
+      
       formData.append("description", data.description)
       formData.append("title", data.title)
-      formData.append("titleslug", data.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''))
       formData.append("price", data.price)
       formData.append("category", data.category)
-      formData.append("ImageArray", data.ImageArray[0])
-      formData.append("featureImage", data.featureImage[0])
-
+      
       if (!values.edit) {
-
+        
+        formData.append("titleslug", data.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''))
         dispatch(productActionCreator.createProduct(formData))
 
       } else {
 
-        let ImageArray = data.ImageArray
-
-        if (!Array.isArray(ImageArray)) {
-          ImageArray = ImageArray.split(',')
-        }
-
-        dispatch(productActionCreator.updateProduct({ data: { ...data, _id: EditProductDetails._id, ImageArray: ImageArray }, history: history }))
+        
+        formData.append("_id", EditProductDetails._id)
+        
+        dispatch(productActionCreator.updateProduct({ data:formData , history: history }))
 
       }
 
@@ -67,7 +71,6 @@ const AddProduct = () => {
   }
 
 
-  const EditProductDetails = useAppSelector((state) => state.productReducer.SingleProduct)
 
 
 
@@ -80,8 +83,6 @@ const AddProduct = () => {
       setValue("title", EditProductDetails.title)
       setValue("price", EditProductDetails.price)
       setValue("category", EditProductDetails.category)
-      setValue("ImageArray", EditProductDetails.ImageArray)
-      setValue("featureImage", EditProductDetails.featureImage)
     } else {
       dispatch(productActionCreator.setProductEmpty())
       setValue("description", "")
@@ -90,7 +91,6 @@ const AddProduct = () => {
       setValue("category", "")
     }
 
-    console.log(values.edit);
 
 
 
@@ -103,7 +103,7 @@ const AddProduct = () => {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} tw="flex flex-col  min-h-screen max-w-5xl mx-auto p-10 text-center " encType="multipart/form-data" >
+    <form onSubmit={handleSubmit(onSubmit)} tw="flex flex-col  min-h-screen max-w-5xl mx-auto p-10 text-center justify-center items-center" encType="multipart/form-data" >
       <p>Add Product</p>
       <Label>Title</Label>
       <Input {...register("title", { required: "this is Required" })} />
@@ -120,42 +120,27 @@ const AddProduct = () => {
         <option value="must-haves">Must haves</option>
       </select>
 
+      <Label  >featureImage</Label>
       <input  {...register("featureImage", { required: "this is Required" })} type="file"  />
-      <input  {...register("ImageArray", { required: "this is Required" })} type="file"  />
+      
+      
+      <Label  >ImageArray</Label>
+      <input  {...register("ImageArray", { required: "this is Required" })} type="file"  multiple/>
      
-
-
-
-
-      {/* <div tw="my-4" >
-        <label tw="block text-sm font-medium">
-          ImageArray
-              </label>
-        <div tw="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-          <div tw="space-y-1 text-center">
-            <svg tw="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden={false} >
-              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <div tw="flex text-sm">
-              <label tw="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                <span>Upload a file</span>
-                <input  {...register("ImageArray", { required: "this is Required" })} type="file" tw="sr-only" />
-              </label>
-              <p tw="pl-1">or drag and drop</p>
-            </div>
-            <p tw="text-xs">
-              PNG, JPG, GIF up to 10MB
-                  </p>
+    <div tw=" grid grid-cols-5   lg:grid-cols-8 gap-2 mt-2" >
+      {EditProductDetails.ImageArray  &&  
+        EditProductDetails.ImageArray.map((image: string) => (
+          <div tw="flex flex-col" >
+          <img tw="w-full cursor-pointer h-auto" src={`http://localhost:3001/images/${image}`} alt="..." /> 
+          <button onClick={() => dispatch(productActionCreator.deleteImageProduct(EditProductDetails._id, image))}  >X</button> 
           </div>
-        </div>
-      </div> */}
+        ))
+      } 
+
+    </div>
 
 
-
-
-
-
-      <div tw='text-black'>
+      <div tw='text-black  mt-4'>
         <CKEditor
           editor={ClassicEditor}
           onChange={(event: any, editor: any) => {
