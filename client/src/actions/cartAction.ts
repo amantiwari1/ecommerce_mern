@@ -1,65 +1,64 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { addCartData } from "../reducers/UserSlice";
-import { getsCartData, updateCartData , removeCartData} from "../reducers/CartSlide";
-import { isLogin } from "../reducers/UserSlice";
+import {toast} from "react-toastify";
+import {addCartData} from "../reducers/UserSlice";
+import {
+  getsCartData,
+  updateCartData,
+  removeCartData,
+} from "../reducers/CartSlide";
+import {isLogin} from "../reducers/UserSlice";
 
 const BASE_URL = "http://localhost:3001";
 
-
 const cartActionCreator = {
   addCart: (cart: any) => async (dispatch: Dispatch) => {
-   
-   
     await axios
       .post(`${BASE_URL}/cart/create`, cart.data)
       .then((res) => {
         dispatch(addCartData(res.data.cart));
-        cart.history.push('/cart')
+        cart.history.push("/cart");
       })
       .catch((err) => {
-        if (err.response.status === 401 ) {
-          cart.history.push('/signin')
+        if (err.response.status === 401) {
+          cart.history.push("/signin");
           toast.error("Pleasse Sign In to add your Cart");
         } else {
           toast.error(err.response.data.message);
         }
-        
-
       });
   },
 
   getCarts: () => async (dispatch: Dispatch) => {
     await axios
-    .get(`${BASE_URL}/cart/gets`)
-    .then((res) => {
-      dispatch(getsCartData(res.data.cart));
-    })
-    .catch((err) => {
-      dispatch(isLogin(false));
-      toast.error(err.response.data.message);
-    });
+      .get(`${BASE_URL}/cart/gets`)
+      .then((res) => {
+        dispatch(getsCartData(res.data.cart));
+      })
+      .catch((err) => {
+        dispatch(isLogin(false));
+
+        console.log(err);
+
+        toast.error(err.response.data.message);
+      });
   },
 
   updateCart: (cart: any) => async (dispatch: Dispatch) => {
-    
-    dispatch(updateCartData(cart))
+    dispatch(updateCartData(cart));
   },
   removeCart: (id: string) => async (dispatch: Dispatch) => {
-
     await axios
-    .post(`${BASE_URL}/cart/delete/${id}`)
-    .then(() => {
-      toast.success("removed");
-      dispatch(removeCartData(id))
-    })
-    .catch((err) => {
-      dispatch(isLogin(false));
-      toast.error(err.response.data.message);
-    });
-
-  }
+      .post(`${BASE_URL}/cart/delete/${id}`)
+      .then(() => {
+        toast.success("removed");
+        dispatch(removeCartData(id));
+      })
+      .catch((err) => {
+        dispatch(isLogin(false));
+        toast.error(err.response.data.message);
+      });
+  },
 };
 
 export default cartActionCreator;
