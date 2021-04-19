@@ -1,14 +1,27 @@
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import ProductDocument from "../models/Product/ProductDocument";
 import ProductCollection from "../models/Product/ProductCollection";
 import { validationErrorResponse } from "./ulits";
 import { validationResult } from "express-validator";
+import path from "path";
+import fs from "fs"
 
 
+interface UpdateProduct {
+title: string;
+description: string;
+price: string;
+category: string;
+$push?: any;
+featureImage?: string;
+}
 
 
-export const create: RequestHandler = async (req:Request , res: Response) => {
-  
+// ===================================================================
+// create
+// ===================================================================
+
+export const create: RequestHandler = async (req: Request, res: Response) => {
   const invalid: Response | false = validationErrorResponse(
     res,
     validationResult(req)
@@ -16,29 +29,21 @@ export const create: RequestHandler = async (req:Request , res: Response) => {
   if (invalid) {
     return invalid;
   }
- 
+  const file: any = req.files;
 
-    console.log(req.body.featureImage);
-    
 
-    const file: any = req.files
 
-    console.log(req.body.folder);
-    
+  const featureImage = `${req.body.folder.toString()}/${
+    file.featureImage[0].filename
+  }`;
 
-    
-    const featureImage =  `${req.body.folder.toString()}/${file.featureImage[0].filename}`
-
-    
-    
-    const ImageArray = file.ImageArray.map((file: any) => {
-      return `${req.body.folder.toString()}/${file.filename}`
-    })
-    
-
-    
-    
   
+
+
+  const ImageArray = file.ImageArray.map((file: any) => {
+    return `${req.body.folder.toString()}/${file.filename}`;
+  });
+
   const titleslug = req.body.titleslug;
 
   const isExistTitleSlug = await ProductCollection.exists({
@@ -60,20 +65,29 @@ export const create: RequestHandler = async (req:Request , res: Response) => {
   });
   const saved = await product.save();
   return res.status(201).json(saved);
-
 };
+
+
+
+// ===================================================================
+// getProducts
+// ===================================================================
+
 
 export const getProducts: RequestHandler = async (
   req: Request,
-  res: Response,
+  res: Response
 ) => {
   const AllProduct = await ProductCollection.find();
   return res.status(200).json(AllProduct);
 };
 
+// ===================================================================
+// getProductCategory
+// ===================================================================
 export const getProductCategory: RequestHandler = async (
   req: Request,
-  res: Response,
+  res: Response
 ) => {
   const category = req.query.category;
   const AllProductCategory = await ProductCollection.find().where({
@@ -81,6 +95,11 @@ export const getProductCategory: RequestHandler = async (
   });
   return res.status(200).json(AllProductCategory);
 };
+
+// ===================================================================
+// getProduct
+// ===================================================================
+
 export const getProduct: RequestHandler = async (
   req: Request,
   res: Response
@@ -99,32 +118,100 @@ export const getProduct: RequestHandler = async (
   return res.status(200).json(Product);
 };
 
+
+// ===================================================================
+// updateProduct
+// ===================================================================
+
 export const updateProduct: RequestHandler = async (
   req: Request,
   res: Response
-) => {  
+) => {
+
+  const file: any = req.files;
+
+
+
   
-  const updateProduct = {
+  const updateProduct: UpdateProduct = {
     title: req.body.title,
     description: req.body.description,
     price: req.body.price,
-    featureImage: req.body.featureImage,
-    ImageArray: req.body.ImageArray,
     category: req.body.category,
-  }
+  };
+
+
+ if (file.ImageArray) {
+   const ImageArray = file.ImageArray.map((file: any) => {
+     return `${req.body.folder.toString()}/${file.filename}`;
+   });
+   updateProduct.$push = { "ImageArray" : ImageArray}
+ }
+
+ if (file.featureImage) {
+        const featureImage = `${req.body.folder.toString()}/${file.featureImage[0].filename}`;
+        updateProduct.featureImage = featureImage
+ }
+
+  
   const updated = await ProductCollection.findByIdAndUpdate(
     { _id: req.body._id },
-    updateProduct
+    updateProduct,
+    {new: true}
   ).exec();
 
+
   
-  return res.status(200).json({...updateProduct, _id: req.body._id, titleslug: updated!.titleslug});
+  return res
+    .status(200)
+    .json(updated);
 };
 
-export const deleteProduct:RequestHandler =  async (req: Request, res: Response) => {
+// ===================================================================
+// deleteProduct
+// ===================================================================
+
+
+export const deleteProduct: RequestHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const deleteProduct = await ProductCollection.findByIdAndDelete(
+    req.params.id
+  );
+
+    if (deleteProduct) {
+
+      const folder = deleteProduct.featureImage.split("/")[0]
+
+      const dir = path.join(__dirname, "..", "images", folder)
+
+
+      fs.rmdirSync(dir, { recursive: true 
+      })
+      
+    }
+
+  return res.status(200).json("deleted product");
+};
+
+// ===================================================================
+// deleteImageProduct
+// ===================================================================
+
+export const deleteImageProduct: RequestHandler = async (req: Request, res: Response) => {
+
+
   
-  const deleteProduct = await ProductCollection.findByIdAndDelete(req.params.id)
-  console.log(deleteProduct);
-  
-  return res.status(200).json("deleted product")
+  const deleteImage = await ProductCollection.updateOne({
+    _id: req.params.id
+  }, {
+    "$pull": {"ImageArray": `${req.params.folder}/${req.params.filename}`}
+  }).exec();
+
+  const file = path.join(__dirname, "..", "images", req.params.folder, req.params.filename)
+
+    fs.unlinkSync(file)
+
+    return res.status(200).json(deleteImage)
 }
