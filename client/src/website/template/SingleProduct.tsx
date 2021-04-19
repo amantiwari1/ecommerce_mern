@@ -61,7 +61,7 @@ const SignleProduct = () => {
 
                             <img  onClick={() => setChangeImage(`http://localhost:3001/images/${featureImage}`)} tw="w-full cursor-pointer h-auto" src={`http://localhost:3001/images/${featureImage}`} alt="" />
                             {
-                                ImageArray.map((x, i) => (
+                                ImageArray.map((x: any, i: any) => (
                                     <img key={i} onClick={() => setChangeImage(`http://localhost:3001/images/${x}`)} tw="w-full cursor-pointer h-auto" src={`http://localhost:3001/images/${x}`} alt="" /> 
 
                                 ))
