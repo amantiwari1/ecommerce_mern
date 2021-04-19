@@ -2,9 +2,9 @@ import { UnifiedModel } from "./UnifiedModel";
 export default interface Product extends UnifiedModel {
     title: string;
     description: string;
-    price: number;
+    price: any;
     featureImage: string;
-    ImageArray: string[];
+    ImageArray: any;
     category: string;
     titleslug: string;
 }
