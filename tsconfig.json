@@ -13,7 +13,7 @@
     "paths": {
       "*": ["node_modules/*", "server/types/*"]
     },
-    "noUnusedLocals": true,
+    "noUnusedLocals": true
   },
   "include": ["server/**/*", "client /src/models/**/*"]
 }

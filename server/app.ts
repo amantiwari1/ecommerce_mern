@@ -3,14 +3,14 @@ import cors from "cors";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import passport from "passport";
-import { MONGODB_URI, SERVER_PORT, ORIGIN_URI } from "./util/secrets";
-import { Response, Request, NextFunction } from "express";
+import {MONGODB_URI, SERVER_PORT, ORIGIN_URI} from "./util/secrets";
+import {Response, Request, NextFunction} from "express";
 import auth from "./routes/auth.routes";
 import product from "./routes/product.routes";
 import cart from "./routes/cart.routes";
 import isLogin from "./routes/isLogin.routes";
 import cookieParser from "cookie-parser";
-import passportMiddleware from './middlewares/passport'
+import passportMiddleware from "./middlewares/passport";
 
 // API keys and Passport configuration
 import version from "./routes/version";
@@ -51,7 +51,7 @@ app.use(
 
 app.use(cookieParser());
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(passportMiddleware);
@@ -60,7 +60,7 @@ app.use(morgan("dev"));
 
 // Server rendering configuration
 
-app.use('/images', express.static(path.join(__dirname,'images')))
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/version", version);
 app.use("/auth", auth); // version indicator
 app.use("/product", product);
@@ -68,10 +68,9 @@ app.use("/islogin", isLogin);
 app.use("/cart", cart);
 
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
-
   console.log(err);
-  
-  return res.status(err.statusCode || 500).json({ message: err.message });
+
+  return res.status(err.statusCode || 500).json({message: err.message});
 });
 
 export default app;

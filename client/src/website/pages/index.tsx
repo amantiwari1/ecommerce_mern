@@ -1,10 +1,10 @@
-export { default as Home } from './Home'
-export { default as ContactUs } from './Footer/ContactUs'
-export { default as  ShoppingCart } from './ShoppingCart'
-export { default as SignIn } from './SignIn'
-export { default as SignUp } from './SignUp'
-export { default as AboutUs } from './About/AboutUs'
-export { default as IngredientsList } from './About/IngredientsList'
-export { default as  WhatisBoba } from './About/WhatisBoba'
-export { default as Faq } from './Footer/Faq'
-export { default as AddProduct } from './AddProduct'
+export {default as Home} from "./Home";
+export {default as ContactUs} from "./Footer/ContactUs";
+export {default as ShoppingCart} from "./ShoppingCart";
+export {default as SignIn} from "./SignIn";
+export {default as SignUp} from "./SignUp";
+export {default as AboutUs} from "./About/AboutUs";
+export {default as IngredientsList} from "./About/IngredientsList";
+export {default as WhatisBoba} from "./About/WhatisBoba";
+export {default as Faq} from "./Footer/Faq";
+export {default as AddProduct} from "./AddProduct";

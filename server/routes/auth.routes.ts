@@ -1,6 +1,6 @@
-import { Router } from "express";
+import {Router} from "express";
 import * as authController from "../controllers/auth.controller";
-import {use} from "../util/TryCatch"
+import {use} from "../util/TryCatch";
 
 const auth = Router();
 

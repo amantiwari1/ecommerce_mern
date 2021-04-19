@@ -1,21 +1,19 @@
-import { Request, RequestHandler, Response } from "express";
+import {Request, RequestHandler, Response} from "express";
 import ProductDocument from "../models/Product/ProductDocument";
 import ProductCollection from "../models/Product/ProductCollection";
-import { validationErrorResponse } from "./ulits";
-import { validationResult } from "express-validator";
+import {validationErrorResponse} from "./ulits";
+import {validationResult} from "express-validator";
 import path from "path";
-import fs from "fs"
-
+import fs from "fs";
 
 interface UpdateProduct {
-title: string;
-description: string;
-price: string;
-category: string;
-$push?: any;
-featureImage?: string;
+  title: string;
+  description: string;
+  price: string;
+  category: string;
+  $push?: any;
+  featureImage?: string;
 }
-
 
 // ===================================================================
 // create
@@ -31,14 +29,9 @@ export const create: RequestHandler = async (req: Request, res: Response) => {
   }
   const file: any = req.files;
 
-
-
   const featureImage = `${req.body.folder.toString()}/${
     file.featureImage[0].filename
   }`;
-
-  
-
 
   const ImageArray = file.ImageArray.map((file: any) => {
     return `${req.body.folder.toString()}/${file.filename}`;
@@ -67,12 +60,9 @@ export const create: RequestHandler = async (req: Request, res: Response) => {
   return res.status(201).json(saved);
 };
 
-
-
 // ===================================================================
 // getProducts
 // ===================================================================
-
 
 export const getProducts: RequestHandler = async (
   req: Request,
@@ -114,10 +104,9 @@ export const getProduct: RequestHandler = async (
     throw new Error("not found");
   }
 
-  const Product = await ProductCollection.findOne({ titleslug: titleslug });
+  const Product = await ProductCollection.findOne({titleslug: titleslug});
   return res.status(200).json(Product);
 };
-
 
 // ===================================================================
 // updateProduct
@@ -127,12 +116,8 @@ export const updateProduct: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-
   const file: any = req.files;
 
-
-
-  
   const updateProduct: UpdateProduct = {
     title: req.body.title,
     description: req.body.description,
@@ -140,37 +125,32 @@ export const updateProduct: RequestHandler = async (
     category: req.body.category,
   };
 
+  if (file.ImageArray) {
+    const ImageArray = file.ImageArray.map((file: any) => {
+      return `${req.body.folder.toString()}/${file.filename}`;
+    });
+    updateProduct.$push = {ImageArray: ImageArray};
+  }
 
- if (file.ImageArray) {
-   const ImageArray = file.ImageArray.map((file: any) => {
-     return `${req.body.folder.toString()}/${file.filename}`;
-   });
-   updateProduct.$push = { "ImageArray" : ImageArray}
- }
+  if (file.featureImage) {
+    const featureImage = `${req.body.folder.toString()}/${
+      file.featureImage[0].filename
+    }`;
+    updateProduct.featureImage = featureImage;
+  }
 
- if (file.featureImage) {
-        const featureImage = `${req.body.folder.toString()}/${file.featureImage[0].filename}`;
-        updateProduct.featureImage = featureImage
- }
-
-  
   const updated = await ProductCollection.findByIdAndUpdate(
-    { _id: req.body._id },
+    {_id: req.body._id},
     updateProduct,
     {new: true}
   ).exec();
 
-
-  
-  return res
-    .status(200)
-    .json(updated);
+  return res.status(200).json(updated);
 };
 
 // ===================================================================
 // deleteProduct
 // ===================================================================
-
 
 export const deleteProduct: RequestHandler = async (
   req: Request,
@@ -180,17 +160,13 @@ export const deleteProduct: RequestHandler = async (
     req.params.id
   );
 
-    if (deleteProduct) {
+  if (deleteProduct) {
+    const folder = deleteProduct.featureImage.split("/")[0];
 
-      const folder = deleteProduct.featureImage.split("/")[0]
+    const dir = path.join(__dirname, "..", "images", folder);
 
-      const dir = path.join(__dirname, "..", "images", folder)
-
-
-      fs.rmdirSync(dir, { recursive: true 
-      })
-      
-    }
+    fs.rmdirSync(dir, {recursive: true});
+  }
 
   return res.status(200).json("deleted product");
 };
@@ -199,19 +175,28 @@ export const deleteProduct: RequestHandler = async (
 // deleteImageProduct
 // ===================================================================
 
-export const deleteImageProduct: RequestHandler = async (req: Request, res: Response) => {
+export const deleteImageProduct: RequestHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const deleteImage = await ProductCollection.updateOne(
+    {
+      _id: req.params.id,
+    },
+    {
+      $pull: {ImageArray: `${req.params.folder}/${req.params.filename}`},
+    }
+  ).exec();
 
+  const file = path.join(
+    __dirname,
+    "..",
+    "images",
+    req.params.folder,
+    req.params.filename
+  );
 
-  
-  const deleteImage = await ProductCollection.updateOne({
-    _id: req.params.id
-  }, {
-    "$pull": {"ImageArray": `${req.params.folder}/${req.params.filename}`}
-  }).exec();
+  fs.unlinkSync(file);
 
-  const file = path.join(__dirname, "..", "images", req.params.folder, req.params.filename)
-
-    fs.unlinkSync(file)
-
-    return res.status(200).json(deleteImage)
-}
+  return res.status(200).json(deleteImage);
+};

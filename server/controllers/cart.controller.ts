@@ -1,4 +1,4 @@
-import { Request, RequestHandler, Response } from "express";
+import {Request, RequestHandler, Response} from "express";
 import UserCollection from "../models/User/UserCollection";
 import ProductCollection from "../models/Product/ProductCollection";
 import errorMessage from "../util/errorMessage";
@@ -21,7 +21,6 @@ export const read: RequestHandler = async (
       req.user.cart.map(async (product: any) => {
         const oneCart = await ProductCollection.findById(product.ProductId);
 
-        
         if (oneCart) {
           return {
             id: product.ProductId,
@@ -35,14 +34,12 @@ export const read: RequestHandler = async (
         }
         return {
           id: product.ProductId,
-          title: "this product has been removed"
+          title: "this product has been removed",
         };
       })
     );
 
-    
-
-    return res.status(200).json({ cart: cart });
+    return res.status(200).json({cart: cart});
   }
 };
 
@@ -52,7 +49,7 @@ export const add: RequestHandler = async (
 ) => {
   const user = await UserCollection.findById(req.user!.id).exec();
   const isExistCart = await UserCollection.findOneAndUpdate(
-    { _id: req.user!.id, "cart.ProductId": req.body.ProductId },
+    {_id: req.user!.id, "cart.ProductId": req.body.ProductId},
     {
       $inc: {
         "cart.$.Quality": req.body.Quality,
@@ -66,18 +63,24 @@ export const add: RequestHandler = async (
       user.save();
     }
 
-    return res.status(201).json({ cart: req.body });
+    return res.status(201).json({cart: req.body});
   }
 };
 
-export const remove: RequestHandler = async (req: IGetUserAuthInfoRequest, res: Response) => {
+export const remove: RequestHandler = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+) => {
   if (!req.params.id) {
     errorMessage.invalid("invalid id");
   }
 
-   UserCollection.updateOne({
-    _id: req.user!.id,
-  }, {"$pull": { "cart": {"ProductId":req.params.id }}}).exec();
+  UserCollection.updateOne(
+    {
+      _id: req.user!.id,
+    },
+    {$pull: {cart: {ProductId: req.params.id}}}
+  ).exec();
 
-  return res.status(201).json({ msg: "deleted"})
+  return res.status(201).json({msg: "deleted"});
 };

@@ -8,8 +8,8 @@ import {
   SetEmptyProduct,
   deleteImageProductData,
 } from "../reducers/ProductSlice";
-import { Dispatch } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import {Dispatch} from "@reduxjs/toolkit";
+import {toast} from "react-toastify";
 
 const BASE_URL = "http://localhost:3001";
 
@@ -17,7 +17,7 @@ const productActionCreator = {
   createProduct: (post: any) => async (dispatch: Dispatch) => {
     dispatch(ProductBegin());
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const config = {headers: {"Content-Type": "multipart/form-data"}};
 
     await axios
       .post(`${BASE_URL}/product/create`, post, config)
@@ -72,9 +72,8 @@ const productActionCreator = {
     dispatch(SetEmptyProduct());
   },
   updateProduct: (data: any) => async (dispatch: Dispatch) => {
-
     await axios
-      .post(`${BASE_URL}/product/update/${data.data.get('_id')}`, data.data)
+      .post(`${BASE_URL}/product/update/${data.data.get("_id")}`, data.data)
       .then((res) => {
         dispatch(UpdateProductData(res.data));
         data.history.go(-1);

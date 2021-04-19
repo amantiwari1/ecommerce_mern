@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 
 /**
  * Hook for handling closing when clicking outside of an element
@@ -19,7 +19,6 @@ export const useDetectOutsideClick = (el: any, initialState: any) => {
     // If the item is active (ie open) then listen for clicks outside
     if (isActive) {
       window.addEventListener("click", onClick);
-      
     }
 
     return () => {

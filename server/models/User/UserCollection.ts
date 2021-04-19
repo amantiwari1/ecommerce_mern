@@ -1,27 +1,25 @@
 import bcrypt from "bcrypt";
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose, {Model, Schema} from "mongoose";
 import UserDocument from "./UserDocument";
 export const userSchema = new Schema<UserDocument>(
   {
-    email: { type: String, unique: true },
+    email: {type: String, unique: true},
     password: String,
-    name: { type: String },
-    cart: { type: Array},
-    isAdmin: { type: Boolean, default: false}
+    name: {type: String},
+    cart: {type: Array},
+    isAdmin: {type: Boolean, default: false},
   },
-  { timestamps: true }
+  {timestamps: true}
 );
 
-
 userSchema.methods.comparePassword = async function (
-    password: string
-  ): Promise<Boolean | undefined> {
-    if (this.password) {
-      return await bcrypt.compare(password, this.password);
-    }
-  };
+  password: string
+): Promise<Boolean | undefined> {
+  if (this.password) {
+    return await bcrypt.compare(password, this.password);
+  }
+};
 
-  
 /**
  * Password hashing & Signing Url middleware.
  */
@@ -36,7 +34,6 @@ userSchema.pre<UserDocument>("save", async function (next) {
 
   next();
 });
-
 
 const UserCollection: Model<UserDocument> = mongoose.model("User", userSchema);
 export default UserCollection;

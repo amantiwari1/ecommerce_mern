@@ -1,16 +1,14 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import User from "../models/User";
-import { addCurrentUser, isLogin } from "../reducers/UserSlice";
+import {addCurrentUser, isLogin} from "../reducers/UserSlice";
 axios.defaults.withCredentials = true;
 
 const BASE_URL = "http://localhost:3001";
 
 const userActionCreator = {
-  signup: (user: { data: User; history: any }) => async (
-    dispatch: Dispatch
-  ) => {
+  signup: (user: {data: User; history: any}) => async (dispatch: Dispatch) => {
     await axios
       .post(`${BASE_URL}/auth/signup`, user.data)
       .then(() => {
@@ -23,7 +21,7 @@ const userActionCreator = {
       });
   },
 
-  login: (user: { data: User; history: any }) => async (dispatch: Dispatch) => {
+  login: (user: {data: User; history: any}) => async (dispatch: Dispatch) => {
     await axios
       .post(`${BASE_URL}/auth/signin`, user.data)
       .then((res) => {
@@ -36,9 +34,7 @@ const userActionCreator = {
       });
   },
 
-  isLogin: () => async (
-    dispatch: Dispatch
-  ) => {
+  isLogin: () => async (dispatch: Dispatch) => {
     await axios
       .get(`${BASE_URL}/islogin/verify`)
       .then((res) => {
@@ -52,15 +48,15 @@ const userActionCreator = {
 
   logout: () => async (dispatch: Dispatch) => {
     await axios
-    .get(`${BASE_URL}/auth/logout`)
-    .then(() => {
-      toast.success("Successfully logged out");
-      dispatch(isLogin(false));
-    })
-    .catch((err) => {
-      dispatch(isLogin(false));
-    });
-  }
+      .get(`${BASE_URL}/auth/logout`)
+      .then(() => {
+        toast.success("Successfully logged out");
+        dispatch(isLogin(false));
+      })
+      .catch((err) => {
+        dispatch(isLogin(false));
+      });
+  },
 };
 
 export default userActionCreator;

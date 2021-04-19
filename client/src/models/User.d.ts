@@ -1,8 +1,8 @@
-import { UnifiedModel } from "./UnifiedModel";
+import {UnifiedModel} from "./UnifiedModel";
 export default interface User extends UnifiedModel {
-    email?: string;
-    password?: string;
-    name?: string;
-    cart: Array;
-    isAdmin: boolean;
+  email?: string;
+  password?: string;
+  name?: string;
+  cart: Array;
+  isAdmin: boolean;
 }

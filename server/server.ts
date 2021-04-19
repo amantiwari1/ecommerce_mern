@@ -1,7 +1,5 @@
 import app from "./app";
 
-
-
 const server = app.listen(app.get("server_port"), () => {
   console.log(
     "  App is running at %s:%d in %s mode",
