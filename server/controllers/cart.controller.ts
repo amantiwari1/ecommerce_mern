@@ -1,4 +1,4 @@
-import { NextFunction, Request, RequestHandler, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import UserCollection from "../models/User/UserCollection";
 import ProductCollection from "../models/Product/ProductCollection";
 import errorMessage from "../util/errorMessage";
@@ -20,6 +20,8 @@ export const read: RequestHandler = async (
     const cart = await Promise.all(
       req.user.cart.map(async (product: any) => {
         const oneCart = await ProductCollection.findById(product.ProductId);
+
+        
         if (oneCart) {
           return {
             id: product.ProductId,
@@ -31,8 +33,14 @@ export const read: RequestHandler = async (
             total: product.Quality * oneCart.price,
           };
         }
+        return {
+          id: product.ProductId,
+          title: "this product has been removed"
+        };
       })
     );
+
+    
 
     return res.status(200).json({ cart: cart });
   }
