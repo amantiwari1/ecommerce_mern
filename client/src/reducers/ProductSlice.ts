@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import ProductState from "../models/client/PorudactState";
 
 // Define the initial state using that type
@@ -26,34 +26,37 @@ export const productSlice = createSlice({
         ...state,
         loading: false,
         valid: false,
-        data: [...state.data, { ...action.payload }],
+        data: [...state.data, {...action.payload}],
       };
     },
     ProductBegin: (state) => {
-      return { ...state, loading: true, valid: true };
+      return {...state, loading: true, valid: true};
     },
     GetProductsSuccess: (state, action) => {
-      return { ...state, loading: false, valid: false, data: action.payload };
+      return {...state, loading: false, valid: false, data: action.payload};
     },
     GetSingleProductSuccess: (state, action) => {
       return {
         ...state,
         loading: false,
         valid: false,
-        SingleProduct: { ...action.payload },
+        SingleProduct: {...action.payload},
       };
     },
     SetEmptyProduct: (state) => {
-      state.SingleProduct = initialState.SingleProduct
+      state.SingleProduct = initialState.SingleProduct;
     },
     UpdateProductData: (state, action) => {
-      state.SingleProduct = action.payload
+      state.SingleProduct = action.payload;
+    },
+
+    deleteImageProductData: (state, action) => {
+      state.SingleProduct.ImageArray = state.SingleProduct.ImageArray.filter(
+        (arr: string) => arr !== action.payload
+      );
     },
   },
-
-
 });
-
 
 export const {
   SaveProductSuccess,
@@ -61,7 +64,8 @@ export const {
   GetProductsSuccess,
   GetSingleProductSuccess,
   SetEmptyProduct,
-  UpdateProductData
+  UpdateProductData,
+  deleteImageProductData,
 } = productSlice.actions;
 
 export default productSlice.reducer;
