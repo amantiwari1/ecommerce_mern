@@ -56,7 +56,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(passportMiddleware);
 
-app.use(morgan("common"));
+app.use(morgan("dev"));
 
 // Server rendering configuration
 
@@ -68,6 +68,9 @@ app.use("/islogin", isLogin);
 app.use("/cart", cart);
 
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
+
+  console.log(err);
+  
   return res.status(err.statusCode || 500).json({ message: err.message });
 });
 
