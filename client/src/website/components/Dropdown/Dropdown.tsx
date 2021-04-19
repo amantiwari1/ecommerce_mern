@@ -21,7 +21,6 @@ const DropdownTwin = ({ name, navitems, onTurnNav }: DropdownInterface): JSX.Ele
     e => {
       if (e.key === 'Escape' && isActive) {
         setIsActive(false);
-        console.log('I pressed');
       }
     },
     [setIsActive, isActive]
