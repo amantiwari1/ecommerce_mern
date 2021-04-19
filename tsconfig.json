@@ -9,11 +9,11 @@
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "jsx": "react",
     "allowJs": true,
     "paths": {
       "*": ["node_modules/*", "server/types/*"]
-    }
+    },
+    "noUnusedLocals": true,
   },
   "include": ["server/**/*", "client /src/models/**/*"]
 }
