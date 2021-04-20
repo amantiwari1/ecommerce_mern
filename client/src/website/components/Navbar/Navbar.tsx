@@ -2,7 +2,8 @@ import Toggle from "../../theme/themeToggle";
 /** @jsxImportSource @emotion/react */
 import tw from "twin.macro";
 import NavItems from "./NavItems";
-import {GiHamburgerMenu, GiShoppingCart} from "react-icons/gi";
+import {GiHamburgerMenu} from "react-icons/gi";
+import {AiOutlineShoppingCart} from "react-icons/ai";
 import {useState} from "react";
 import DropdownTwin from "../Dropdown/Dropdown";
 import {Link} from "react-router-dom";
@@ -13,22 +14,27 @@ const ShopItems = [
   {
     name: "Boba kits",
     to: "/collections/boba-kits",
+    isLink: true,
   },
   {
     name: "Powders",
     to: "/collections/powders",
+    isLink: true,
   },
   {
     name: "Tea Leaves",
     to: "/collections/tea-leaves",
+    isLink: true,
   },
   {
     name: "Must Haves",
     to: "/collections/tea-leaves",
+    isLink: true,
   },
   {
     name: "Shop All",
     to: "/collections/all",
+    isLink: true,
   },
 ];
 
@@ -36,14 +42,17 @@ const AboutItems = [
   {
     name: "Our Story",
     to: "/pages/about",
+    isLink: true,
   },
   {
     name: "What is Boba?",
     to: "/pages/what-is-boba",
+    isLink: true,
   },
   {
     name: "Ingredients List",
     to: "/pages/ingredients-list",
+    isLink: true,
   },
 ];
 
@@ -51,14 +60,42 @@ const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const onClick = () => setMenu(!menu);
   const dispatch = useAppDispatch();
+
+  const myAccount = [
+    {
+      name: "My Orders",
+      isLink: true,
+      to: "/order",
+    },
+    {
+      name: "My Cart",
+      isLink: true,
+      to: "/cart",
+    },
+    {
+      name: "Log out",
+      isLink: false,
+      onClick: () => dispatch(userActionCreator.logout()),
+    },
+  ];
+
   const {isAuth, currentUser} = useAppSelector((state) => state.userReducer);
+
+  if (currentUser.isAdmin) {
+    myAccount.push({
+      name: "Add Product",
+      isLink: true,
+      to: "/editProduct",
+    });
+  }
+
   return (
     <nav tw=" top-0 p-3 md:px-10 lg:px-20 bg-lightnav space-y-1 text-center items-center h-10v md:( flex space-y-0 justify-between)   dark:(bg-darknav)">
       <div tw="flex justify-between  ">
         <h1 tw=" text-3xl  tracking-wider text-blue-300 font-bold">Sammoo</h1>
         <div tw="flex  items-center space-x-5">
           <Link to="/cart">
-            <GiShoppingCart tw="text-white text-2xl md:hidden cursor-pointer" />
+            <AiOutlineShoppingCart tw="text-white text-2xl md:hidden cursor-pointer" />
           </Link>
 
           <div tw="md:hidden">
@@ -78,18 +115,12 @@ const Navbar = () => {
           <NavItems onClick={onClick} to="/">
             Home
           </NavItems>
-
-          {currentUser.isAdmin && (
-            <NavItems onClick={onClick} to="/editProduct">
-              Add Porduct
-            </NavItems>
-          )}
         </div>
 
         <DropdownTwin onTurnNav={onClick} name="Shop" navitems={ShopItems} />
         <DropdownTwin onTurnNav={onClick} name="About" navitems={AboutItems} />
         <Link to="/cart">
-          <GiShoppingCart tw="xs:hidden md:inline text-white text-2xl  cursor-pointer" />
+          <AiOutlineShoppingCart tw="xs:hidden md:inline text-white text-2xl  cursor-pointer" />
         </Link>
         <div tw="xs:hidden  md:inline">
           <Toggle tw=" items-center pt-2 " />
@@ -104,14 +135,15 @@ const Navbar = () => {
               Sign In
             </Link>
           ) : (
-            <button
-              tw="md:inline-flex inline-block  flex-wrap py-1.5 px-4 items-center text-white justify-center rounded-xl text-center cursor-pointer transition ease-out delay-150 duration-300 hover:( bg-gray-500 ) dark:( hover:( bg-gray-600 ) text-white)"
-              onClick={() => {
-                onClick();
-                dispatch(userActionCreator.logout());
-              }}>
-              Log out
-            </button>
+            <>
+              <DropdownTwin
+                onTurnNav={() => {
+                  onClick();
+                }}
+                name="My Account"
+                navitems={myAccount}
+              />
+            </>
           )}
         </div>
       </div>
