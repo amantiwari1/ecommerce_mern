@@ -5,6 +5,7 @@ import ProductCart from "../components/ProductCart/ProductCart";
 import CartActionCreator from "../../actions/cartAction";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../shared/reduxHooks";
+import orderActionCreator from "../../actions/orderAction";
 
 const ShoppingCart = () => {
   const dispatch = useAppDispatch();
@@ -13,6 +14,12 @@ const ShoppingCart = () => {
   useEffect(() => {
     dispatch(CartActionCreator.getCarts());
   }, [dispatch]);
+
+  const onOrderHandler = () => {
+    dispatch(
+      orderActionCreator.orderCart({cart: {cart: data, total: fullTotal}})
+    );
+  };
 
   return (
     <div tw="px-8 py-24">
@@ -39,7 +46,9 @@ const ShoppingCart = () => {
         ))}
         <div tw="flex flex-col items-end">
           <p tw="font-bold py-5">Total Price: ${fullTotal}</p>
-          <button tw="py-4   w-36 text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md">
+          <button
+            onClick={onOrderHandler}
+            tw="py-4   w-36 text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md">
             CHECKOUT
           </button>
         </div>
