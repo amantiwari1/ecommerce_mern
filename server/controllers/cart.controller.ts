@@ -84,3 +84,5 @@ export const remove: RequestHandler = async (
 
   return res.status(201).json({msg: "deleted"});
 };
+
+// TODO: remove all cart from user in monodb
