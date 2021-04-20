@@ -9,6 +9,7 @@ import auth from "./routes/auth.routes";
 import product from "./routes/product.routes";
 import cart from "./routes/cart.routes";
 import isLogin from "./routes/isLogin.routes";
+import order from "./routes/order.routes";
 import cookieParser from "cookie-parser";
 import passportMiddleware from "./middlewares/passport";
 
@@ -66,6 +67,7 @@ app.use("/auth", auth); // version indicator
 app.use("/product", product);
 app.use("/islogin", isLogin);
 app.use("/cart", cart);
+app.use("/order", order);
 
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   console.log(err);
