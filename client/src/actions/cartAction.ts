@@ -6,8 +6,10 @@ import {
   getsCartData,
   updateCartData,
   removeCartData,
+  setEmptyCartData,
 } from "../reducers/CartSlide";
 import {isLogin} from "../reducers/UserSlice";
+import Cart from "../models/cart";
 
 const BASE_URL = "http://localhost:3001";
 
@@ -59,6 +61,8 @@ const cartActionCreator = {
         toast.error(err.response.data.message);
       });
   },
+
+  // TODO: remove all cart including api
 };
 
 export default cartActionCreator;
