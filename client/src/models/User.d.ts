@@ -5,4 +5,5 @@ export default interface User extends UnifiedModel {
   name?: string;
   cart: Array;
   isAdmin: boolean;
+  orders?: Array;
 }
