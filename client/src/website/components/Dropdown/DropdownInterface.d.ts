@@ -1,8 +1,10 @@
 export interface DropdownInterface {
   name: string;
   navitems: Array<{
-    to: string;
+    to?: string;
     name: string;
+    isLink: boolean;
+    onClick?: any;
   }>;
 
   onTurnNav: () => void;
