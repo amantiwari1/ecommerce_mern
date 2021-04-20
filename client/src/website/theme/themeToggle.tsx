@@ -12,12 +12,12 @@ const Toggle = () => {
     <div tw="transition duration-500 ease-in-out rounded-full p-2">
       {theme === "dark" ? (
         <HiSun
-          tw="text-gray-500 dark:text-gray-400 text-2xl cursor-pointer"
+          tw="text-white text-2xl cursor-pointer"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         />
       ) : (
         <HiMoon
-          tw="text-gray-500 dark:text-gray-400 text-2xl cursor-pointer"
+          tw="text-white text-2xl cursor-pointer"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         />
       )}
