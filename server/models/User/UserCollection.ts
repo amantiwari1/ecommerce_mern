@@ -8,6 +8,7 @@ export const userSchema = new Schema<UserDocument>(
     name: {type: String},
     cart: {type: Array},
     isAdmin: {type: Boolean, default: false},
+    orders: [{type: Schema.Types.ObjectId, ref: "Order"}],
   },
   {timestamps: true}
 );
