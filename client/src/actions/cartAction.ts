@@ -61,8 +61,18 @@ const cartActionCreator = {
         toast.error(err.response.data.message);
       });
   },
-
-  // TODO: remove all cart including api
+  removeAllCart: () => async (dispatch: Dispatch) => {
+    await axios
+      .delete(`${BASE_URL}/cart/deleteall/`)
+      .then(() => {
+        toast.success("removed all cart items");
+        dispatch(setEmptyCartData());
+      })
+      .catch((err) => {
+        dispatch(isLogin(false));
+        toast.error(err.response.data.message);
+      });
+  }
 };
 
 export default cartActionCreator;
