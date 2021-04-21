@@ -48,6 +48,7 @@ export const signIn = async (req: Request, res: Response) => {
       .cookie("jwt", createToken(user), {
         httpOnly: true,
         secure: true,
+        sameSite: "none",
         expires: new Date(Date.now() + 7200000),
       })
       .status(200)
