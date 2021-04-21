@@ -10,5 +10,6 @@ const cart: Router = Router();
 cart.get("/gets", isAuth, use(cartController.read));
 cart.post("/create", isAuth, use(cartController.add));
 cart.post("/delete/:id", isAuth, use(cartController.remove));
+cart.delete("/deleteall/", isAuth, use(cartController.removeAll));
 
 export default cart;
