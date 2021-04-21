@@ -6,33 +6,467 @@
 	},
 	"item": [
 		{
-			"name": "/product/create",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\"title\": \"testtestestwest\",\r\n\"description\": \"testtestestwest\",\r\n\"price\": \"testtestestwest\",\r\n\"featureImage\": \"testtestestwest\",\r\n\"ImageArray\": [\"testestest\"],\r\n\"category\": \"testtestestwest\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Product",
+			"item": [
+				{
+					"name": "/product/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ImageArray",
+									"type": "file",
+									"src": [
+										"/C:/Users/ASUS/Desktop/Screenshot 2021-03-11 001827.png",
+										"/C:/Users/ASUS/Desktop/Screenshot 2021-03-11 002402.png",
+										"/C:/Users/ASUS/Desktop/Screenshot 2021-03-11 002435.png",
+										"/C:/Users/ASUS/Desktop/Screenshot 2021-03-11 002632.png",
+										"/C:/Users/ASUS/Desktop/Screenshot 2021-03-11 003338.png",
+										"/C:/Users/ASUS/Desktop/Screenshot 2021-03-11 003400.png"
+									]
+								},
+								{
+									"key": "title",
+									"value": "Milk Tea Powder Boba Kit23",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "<p><strong>Simple, Quick, and Delicious. Ideal for anyone looking for a quick&nbsp;milk tea fix.</strong></p><p>The Milk Tea Powder Boba Kit contains an all-in-one mix of tea, non-dairy creamer, and sugar, for a ready-to-drink bubble tea that is as easy to make as it is to drink. Just add water or milk!&nbsp;This mix can be used to make iced, blended, and hot drinks.</p><p>Makes ~6 16oz. drinks.<br>&nbsp;</p><p><strong>INCLUDES:</strong></p><ul><li>10 oz. Milk Tea Powder</li><li>6 oz. Uncooked Boba</li><li>2 oz. Brown Sugar</li><li>6 Plastic Straws or 1 Reusable Straw</li><li>4x6 SAMMEE Sticker Sheet</li><li>SAMMEE Recipe &amp; Instructions Manual</li><li>&nbsp;</li></ul><p><strong>WHAT YOU’LL NEED:</strong></p><ul><li>Any 16 oz. Cup</li><li>Water or Milk</li><li>Strainer for Boba</li></ul><p>&nbsp;<i>Allergens: Milk Tea Powders contain milk and soy.</i></p><p>*Reusable Straws also sold separately <a href=\\\"https://drinksammee.com/collections/all\\\">here</a>.</p><p>&nbsp;</p><p><strong>BOBA DISCLAIMER:</strong></p><p>Store any leftover uncooked boba in a sealed and airtight container in a cool/dry area. Do NOT store in the fridge.&nbsp;Do NOT eat silica gel packets.</p><p>Once opened, uncooked boba will last approximately 3-5 days.&nbsp;Once cooked, boba will only be good for about 6 hours. Do not refrigerate.</p>",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "25",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "boba-kits",
+									"type": "text"
+								},
+								{
+									"key": "titleslug",
+									"value": "milk-tea-powder-boba-kit23",
+									"type": "text"
+								},
+								{
+									"key": "featureImage",
+									"type": "file",
+									"src": "hema.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/product/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"create"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3001/product/create",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3001",
-					"path": [
-						"product",
-						"create"
-					]
+				{
+					"name": "product/get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/product/get/milk-tea-powder-boba-kit2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"get",
+								"milk-tea-powder-boba-kit2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product/gets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/product/gets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"gets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"607441ce36f56169c4392244\",\r\n    \"ImageArray\": [\r\n        \"http://via.placeholder.com/400x391\",\r\n        \"http://via.placeholder.com/400x392\",\r\n        \"http://via.placeholder.com/400x393\",\r\n        \"http://via.placeholder.com/400x394\",\r\n        \"http://via.placeholder.com/400x395\",\r\n        \"http://via.placeholder.com/400x396\",\r\n        \"http://via.placeholder.com/400x397\",\r\n        \"http://via.placeholder.com/400x398\",\r\n        \"http://via.placeholder.com/400x399\",\r\n        \"http://via.placeholder.com/400x391\"\r\n    ],\r\n    \"title\": \"Milk Tea Powder Boba Kit123\",\r\n    \"titleslug\":\"milk-tea-powder-boba-kit2\",\r\n    \"description\": \"<p><strong>Simple, Quick, and Delicious. Ideal for anyone looking for a quick&nbsp;milk tea fix.</strong></p><p>The Milk Tea Powder Boba Kit contains an all-in-one mix of tea, non-dairy creamer, and sugar, for a ready-to-drink bubble tea that is as easy to make as it is to drink. Just add water or milk!&nbsp;This mix can be used to make iced, blended, and hot drinks.</p><p>Makes ~6 16oz. drinks.<br>&nbsp;</p><p><strong>INCLUDES:</strong></p><ul><li>10 oz. Milk Tea Powder</li><li>6 oz. Uncooked Boba</li><li>2 oz. Brown Sugar</li><li>6 Plastic Straws or 1 Reusable Straw</li><li>4x6 SAMMEE Sticker Sheet</li><li>SAMMEE Recipe &amp; Instructions Manual</li><li>&nbsp;</li></ul><p><strong>WHAT YOU’LL NEED:</strong></p><ul><li>Any 16 oz. Cup</li><li>Water or Milk</li><li>Strainer for Boba</li></ul><p>&nbsp;<i>Allergens: Milk Tea Powders contain milk and soy.</i></p><p>*Reusable Straws also sold separately <a href=\\\"https://drinksammee.com/collections/all\\\">here</a>.</p><p>&nbsp;</p><p><strong>BOBA DISCLAIMER:</strong></p><p>Store any leftover uncooked boba in a sealed and airtight container in a cool/dry area. Do NOT store in the fridge.&nbsp;Do NOT eat silica gel packets.</p><p>Once opened, uncooked boba will last approximately 3-5 days.&nbsp;Once cooked, boba will only be good for about 6 hours. Do not refrigerate.</p>\",\r\n    \"price\": 100,\r\n    \"featureImage\": \"http://via.placeholder.com/400x400\",\r\n    \"category\": \"boba-kits\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/product/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"product",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/product/getsCategories?category-query",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/product/getsCategories?category=boba-kits",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"product",
+								"getsCategories"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "boba-kits"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/product/delete/6074421036f56169c4392245",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"product",
+								"delete",
+								"6074421036f56169c4392245"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Image product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/product/deleteImage/607d6beae287c9840ca57307/1618832362044/2.png",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"product",
+								"deleteImage",
+								"607d6beae287c9840ca57307",
+								"1618832362044",
+								"2.png"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign up api",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"AMAN TIWARI\",\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login API",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/version",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"version"
+							]
+						},
+						"description": "it is version"
+					},
+					"response": []
+				},
+				{
+					"name": "verify",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/islogin/verify",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"islogin",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/auth/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "remove cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cart/delete/6073bd58b1c7d33ce04a5b8a",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"delete",
+								"6073bd58b1c7d33ce04a5b8a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cart/gets",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"gets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProductId\": \"6073bd58b1c7d33ce04a5b8a\",\r\n    \"Quality\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/cart/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"create"
+							],
+							"query": [
+								{
+									"key": "cart",
+									"value": "{cool: \"this is working\"}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete All cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cart/deleteall",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cart",
+								"deleteall"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/order/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/order/read",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"order",
+								"read"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3001"
 		}
 	]
 }
