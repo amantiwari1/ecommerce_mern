@@ -1,6 +1,6 @@
 import {ThemeProvider} from "./theme/themeContext";
 import GlobalStyles from "./theme/globalStyles";
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
 import {
   Home,
   Faq,
@@ -12,6 +12,7 @@ import {
   SignUp,
   ContactUs,
   AddProduct,
+  Order
 } from "./pages";
 
 import {ListofProduct, SingleProduct} from "./template";
@@ -21,11 +22,11 @@ import {ToastContainer} from "react-toastify";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../shared/reduxHooks";
 import userActionCreator from "../actions/userAction";
-
+ 
 function App() {
   const dispatch = useAppDispatch();
-  const isAdmin = useAppSelector(
-    (state) => state.userReducer.currentUser.isAdmin
+  const {currentUser, isAuth } = useAppSelector(
+    (state) => state.userReducer
   );
 
   useEffect(() => {
@@ -38,7 +39,12 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/cart" component={ShoppingCart} />
+        <Route exact path="/cart" >
+          {isAuth ? <ShoppingCart /> : <div>Sign In first</div> }
+        </Route>
+        <Route exact path="/order" >
+          {isAuth ? <Order /> : <div>Sign In first</div> }
+        </Route>
         <Route exact path="/ContactUs" component={ContactUs} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
@@ -47,7 +53,6 @@ function App() {
           path="/collections/:CollectName/product/:productName"
           component={SingleProduct}
         />
-        <Route exact path="/pages/" component={ShoppingCart} />
         <Route exact path="/pages/about" component={AboutUs} />
         <Route exact path="/pages/what-is-boba" component={WhatisBoba} />
         <Route
@@ -61,8 +66,8 @@ function App() {
           component={ListofProduct}
         />
         <Route exact path="/pages/faq" component={Faq} />
-
-        {isAdmin && <Route exact path="/editProduct" component={AddProduct} />}
+ 
+        {currentUser.isAdmin && <Route exact path="/editProduct" component={AddProduct} />}
       </Switch>
       <Footer />
       <ToastContainer
@@ -70,7 +75,7 @@ function App() {
         autoClose={5000}
         hideProgressBar
         newestOnTop={false}
-        closeOnClick
+        closeOnClick  
         rtl={false}
         pauseOnFocusLoss={false}
         draggable={false}
