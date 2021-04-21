@@ -45,7 +45,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://sammee.netlify.app",
+    origin: "https://sammee.netlify.app",
     credentials: true,
   })
 );
