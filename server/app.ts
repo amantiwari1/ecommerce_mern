@@ -45,7 +45,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://sammee.netlify.app",
     credentials: true,
   })
 );
