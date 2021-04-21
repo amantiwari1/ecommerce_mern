@@ -10,6 +10,7 @@ import {
 } from "../reducers/CartSlide";
 import {isLogin} from "../reducers/UserSlice";
 import {BASE_URL} from '../shared/constants'
+axios.defaults.withCredentials = true;
 
 
 const cartActionCreator = {

@@ -11,6 +11,7 @@ import {
 import {Dispatch} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
 import {BASE_URL} from '../shared/constants'
+axios.defaults.withCredentials = true;
 
 
 const productActionCreator = {

@@ -4,6 +4,7 @@ import {toast} from "react-toastify";
 import {setEmptyCartData} from "../reducers/CartSlide";
 import { getOrderData } from "../reducers/OrderSlide";
 import {BASE_URL} from '../shared/constants'
+axios.defaults.withCredentials = true;
 
 
 const orderActionCreator = {
