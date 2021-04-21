@@ -1,5 +1,5 @@
 import {RequestHandler, Request, Response} from "express";
-import OrderCollection from "../models/order/OrderCollection";
+import OrderCollection from "../models/Order/OrderCollection";
 import UserCollection from "../models/User/UserCollection";
 
 export interface IGetUserAuthInfoRequest extends Request {
