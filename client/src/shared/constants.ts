@@ -14,5 +14,5 @@ export const RESPONSE_CONTENT_TYPE = {
 };
 
 
-export const BASE_URL = "https://seemoapi.herokuapp.com/";
+export const BASE_URL = "https://seemoapi.herokuapp.com";
 
