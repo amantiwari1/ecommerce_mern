@@ -6,12 +6,15 @@
   "repository": "https://github.com/amantiwari1/typescript-mern-template",
   "author": "Aman Tiwari",
   "license": "MIT",
+  "engines": { "node": "14.15.3" },
   "scripts": {
     "install": "cd client && yarn install",
-    "start": "concurrently \"yarn serve\" \"yarn client\" ",
+    "start": "node dist/server/server.js",
+    "dev": "concurrently \"yarn serve\" \"yarn client\" ",
     "serve": "tsc-watch --onSuccess \"node dist/server/server.js\" ",
     "client": "node start-client.js",
-    "build": "tsc"
+    "build": "tsc",
+    "deploy": "git add . && git commit -m Heroku && git push heroku main"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
