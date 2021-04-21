@@ -85,4 +85,17 @@ export const remove: RequestHandler = async (
   return res.status(201).json({msg: "deleted"});
 };
 
-// TODO: remove all cart from user in monodb
+export const removeAll: RequestHandler = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+) => {
+  UserCollection.updateOne(
+    {
+      _id: req.user!.id,
+    },
+    {$set: {cart: []}}
+  ).exec();
+
+  return res.status(201).json({msg: "deleted"});
+};
+
