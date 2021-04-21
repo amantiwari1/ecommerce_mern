@@ -12,3 +12,7 @@ export const RESPONSE_CONTENT_TYPE = {
   TEXT: "text/plain",
   HTML: "text/html",
 };
+
+
+export const BASE_URL = "http://localhost:3001";
+

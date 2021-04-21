@@ -3,9 +3,9 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import User from "../models/User";
 import {addCurrentUser, isLogin} from "../reducers/UserSlice";
+import {BASE_URL} from '../shared/constants'
 axios.defaults.withCredentials = true;
 
-const BASE_URL = "http://localhost:3001";
 
 const userActionCreator = {
   signup: (user: {data: User; history: any}) => async (dispatch: Dispatch) => {

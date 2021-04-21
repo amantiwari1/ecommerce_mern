@@ -9,9 +9,8 @@ import {
   setEmptyCartData,
 } from "../reducers/CartSlide";
 import {isLogin} from "../reducers/UserSlice";
-import Cart from "../models/cart";
+import {BASE_URL} from '../shared/constants'
 
-const BASE_URL = "http://localhost:3001";
 
 const cartActionCreator = {
   addCart: (cart: any) => async (dispatch: Dispatch) => {

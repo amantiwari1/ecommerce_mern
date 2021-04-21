@@ -10,8 +10,8 @@ import {
 } from "../reducers/ProductSlice";
 import {Dispatch} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
+import {BASE_URL} from '../shared/constants'
 
-const BASE_URL = "http://localhost:3001";
 
 const productActionCreator = {
   createProduct: (post: any) => async (dispatch: Dispatch) => {
