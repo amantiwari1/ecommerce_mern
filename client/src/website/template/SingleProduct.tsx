@@ -2,7 +2,6 @@
 // eslint-disable-next-line
 import tw from "twin.macro";
 import {useEffect, useState} from "react";
-import {ProductCard} from "../components";
 import {AiOutlineMinusCircle} from "react-icons/ai";
 import {BsPlusCircle} from "react-icons/bs";
 import productActionCreator from "../../actions/productAction";

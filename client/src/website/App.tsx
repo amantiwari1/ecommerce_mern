@@ -1,6 +1,6 @@
 import {ThemeProvider} from "./theme/themeContext";
 import GlobalStyles from "./theme/globalStyles";
-import {Route, Switch, Redirect} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {
   Home,
   Faq,

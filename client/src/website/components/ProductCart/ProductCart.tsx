@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line
-import {useHistory} from "react-router-dom";
 import tw from "twin.macro";
+import {useHistory} from "react-router-dom";
 import cartActionCreator from "../../../actions/cartAction";
 import {useAppDispatch} from "../../../shared/reduxHooks";
 import ProductCartInterface from "./ProductInterface";

@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line
 import tw from "twin.macro";
-import ProductCard from "../ProductCard/ProductCard";
 
 const ProductSection = () => {
   return (

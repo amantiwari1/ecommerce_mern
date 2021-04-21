@@ -84,6 +84,7 @@ const AddProduct = () => {
       setValue("price", 0);
       setValue("category", "");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.edit]);
 
   return (
