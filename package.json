@@ -6,7 +6,6 @@
   "repository": "https://github.com/amantiwari1/typescript-mern-template",
   "author": "Aman Tiwari",
   "license": "MIT",
-  "engines": { "node": "14.15.3" },
   "scripts": {
     "install": "cd client && yarn install",
     "start": "node dist/server/server.js",
