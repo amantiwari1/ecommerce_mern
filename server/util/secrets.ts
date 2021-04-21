@@ -1,6 +1,5 @@
 import {
   HOST_URL_DEV,
-  SERVER_PORT_DEV,
   HOST_NAME_DEV,
 } from "../../client/src/models/HostUrl";
 import dotenv from "dotenv";
@@ -21,13 +20,11 @@ if (!MONGODB_URI) {
 }
 
 let url: string;
-let server_port: number;
 let origin: string;
 
 url = HOST_URL_DEV;
-server_port = SERVER_PORT_DEV;
 origin = HOST_NAME_DEV;
 
 export const HOST_URL = url;
-export const SERVER_PORT = server_port;
+export const SERVER_PORT = process.env.PORT || 3001;
 export const ORIGIN_URI = origin;
