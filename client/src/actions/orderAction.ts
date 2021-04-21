@@ -2,6 +2,7 @@ import {Dispatch} from "@reduxjs/toolkit";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {setEmptyCartData} from "../reducers/CartSlide";
+import { getOrderData } from "../reducers/OrderSlide";
 
 const BASE_URL = "http://localhost:3001";
 
@@ -21,10 +22,11 @@ const orderActionCreator = {
   getOrderData: () => async (dispatch: Dispatch) => {
     await axios
       .get(`${BASE_URL}/order/read`)
-      .then(() => {
-        // TODO: add all order to state
+      .then((res) => {
+        dispatch(getOrderData(res.data))
       })
       .catch((err) => {
+        console.log(err);
         toast.error(err.response.data.message);
       });
   },
