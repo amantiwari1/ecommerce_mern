@@ -10,9 +10,9 @@ import {
 } from "../reducers/ProductSlice";
 import {Dispatch} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
-import {SERVER_URL} from '../models/HostUrl'
+import {SERVER_URL, HOST_URL} from '../models/HostUrl'
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL =  SERVER_URL
+axios.defaults.baseURL =  HOST_URL
 
 const productActionCreator = {
   createProduct: (post: any) => async (dispatch: Dispatch) => {

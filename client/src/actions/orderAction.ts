@@ -3,9 +3,9 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import {setEmptyCartData} from "../reducers/CartSlide";
 import { getOrderData } from "../reducers/OrderSlide";
-import {SERVER_URL} from '../models/HostUrl'
+import {SERVER_URL, HOST_URL} from '../models/HostUrl'
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL =  SERVER_URL
+axios.defaults.baseURL =  HOST_URL
 
 const orderActionCreator = {
   orderCart: (data: any) => async (dispatch: Dispatch) => {

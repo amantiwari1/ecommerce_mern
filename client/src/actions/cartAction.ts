@@ -9,9 +9,9 @@ import {
   setEmptyCartData,
 } from "../reducers/CartSlide";
 import {isLogin} from "../reducers/UserSlice";
-import {SERVER_URL} from '../models/HostUrl'
+import {SERVER_URL, HOST_URL} from '../models/HostUrl'
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL =  SERVER_URL
+axios.defaults.baseURL =  HOST_URL
 
 
 const cartActionCreator = {
