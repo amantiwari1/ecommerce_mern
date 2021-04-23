@@ -23,6 +23,9 @@ const userSlice = createSlice({
     isLogin: (state, action) => {
       return {...state, isAuth: action.payload};
     },
+    isLoading: (state, action) => {
+        state.loading = action.payload
+    },
 
     addCartData: (state, action) => {
       let isExistCard = false;
@@ -41,6 +44,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {addCurrentUser, isLogin, addCartData} = userSlice.actions;
+export const {addCurrentUser, isLogin, addCartData, isLoading} = userSlice.actions;
 
 export default userSlice.reducer;

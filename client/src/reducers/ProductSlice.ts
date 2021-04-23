@@ -29,9 +29,6 @@ export const productSlice = createSlice({
         data: [...state.data, {...action.payload}],
       };
     },
-    ProductBegin: (state) => {
-      return {...state, loading: true, valid: true};
-    },
     GetProductsSuccess: (state, action) => {
       return {...state, loading: false, valid: false, data: action.payload};
     },
@@ -49,6 +46,9 @@ export const productSlice = createSlice({
     UpdateProductData: (state, action) => {
       state.SingleProduct = action.payload;
     },
+    isLoading: (state, action) => {
+      state.loading = action.payload
+  },
 
     deleteImageProductData: (state, action) => {
       state.SingleProduct.ImageArray = state.SingleProduct.ImageArray.filter(
@@ -60,7 +60,7 @@ export const productSlice = createSlice({
 
 export const {
   SaveProductSuccess,
-  ProductBegin,
+  isLoading,
   GetProductsSuccess,
   GetSingleProductSuccess,
   SetEmptyProduct,
