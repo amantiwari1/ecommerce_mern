@@ -8,6 +8,8 @@ import productActionCreator from "../../actions/productAction";
 import cartActionCreator from "../../actions/cartAction";
 import ReactHtmlParser from "react-html-parser";
 import {Link} from "react-router-dom";
+import {SERVER_URL} from '../../models/HostUrl'
+
 
 import {useAppDispatch, useAppSelector} from "../../shared/reduxHooks";
 import {useHistory, useParams} from "react-router";
@@ -33,7 +35,7 @@ const SignleProduct = () => {
 
   useEffect(() => {
     dispatch(productActionCreator.getProduct(productName));
-    setChangeImage(`http://localhost:3001/images/${featureImage}`);
+    setChangeImage(`${SERVER_URL}/images/${featureImage}`);
   }, [dispatch, productName, featureImage]);
 
   const addCartHandler = () => {
@@ -61,21 +63,21 @@ const SignleProduct = () => {
                 <img
                   onClick={() =>
                     setChangeImage(
-                      `http://localhost:3001/images/${featureImage}`
+                      `${SERVER_URL}/images/${featureImage}`
                     )
                   }
                   tw="w-full cursor-pointer h-auto"
-                  src={`http://localhost:3001/images/${featureImage}`}
+                  src={`${SERVER_URL}/images/${featureImage}`}
                   alt=""
                 />
                 {ImageArray.map((x: any, i: any) => (
                   <img
                     key={i}
                     onClick={() =>
-                      setChangeImage(`http://localhost:3001/images/${x}`)
+                      setChangeImage(`${SERVER_URL}/images/${x}`)
                     }
                     tw="w-full cursor-pointer h-auto"
-                    src={`http://localhost:3001/images/${x}`}
+                    src={`${SERVER_URL}/images/${x}`}
                     alt=""
                   />
                 ))}

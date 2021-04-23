@@ -3,13 +3,14 @@
 import tw from "twin.macro";
 import ProductCardInterface from "./ProductCardInterface";
 import {Link} from "react-router-dom";
+import {SERVER_URL} from '../../../models/HostUrl'
 
 const ProductCard = ({to, title, price, img}: ProductCardInterface) => {
   return (
     <Link to={to} tw="space-y-3 ">
       <img
         tw="w-full h-auto"
-        src={`http://localhost:3001/images/${img}`}
+        src={`${SERVER_URL}/images/${img}`}
         alt=""
       />
 
