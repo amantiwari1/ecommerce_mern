@@ -59,14 +59,17 @@ const productActionCreator = {
       const AllProducts = await axios.get(
         `${BASE_URL}/product/getsCategories?category=${category}`
       );
+
+
       dispatch(GetProductsSuccess(AllProducts.data));
 
 
-    dispatch(isLoading(false));
-
+      
     } catch (error) {
+      toast.error("requested failed");
       console.error(error);
     }
+    dispatch(isLoading(false));
   },
   getProduct: (titleslug: string) => async (dispatch: Dispatch) => {
     dispatch(isLoading(true));

@@ -6,6 +6,7 @@ import {ProductCard} from "../components";
 import {useEffect} from "react";
 import productActionCreator from "../../actions/productAction";
 import {useAppDispatch, useAppSelector} from "../../shared/reduxHooks";
+import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader"
 
 const ListofProduct = () => {
   let {CollectName} = useParams<{CollectName: string}>();
@@ -20,12 +21,18 @@ const ListofProduct = () => {
     }
   }, [dispatch, CollectName]);
 
+
   return (
     <>
-      <h1 tw="capitalize text-5xl font-bold text-center py-14">
+      <h1 tw="capitalize text-5xl font-bold text-center py-14"> 
         {CollectName.replaceAll("-", " ")}
       </h1>
+        {
+          AllProduct.loading && <div tw="flex flex-col justify-center items-center" > <ClimbingBoxLoader /> <p tw="font-bold text-2xl" >Loading...</p> </div>
+        }
       <div tw="grid py-10 px-10  lg:grid-cols-4  md:(grid-cols-3) gap-8 justify-center">
+
+        
         {AllProduct.data.map((product) => (
           <ProductCard
             to={`/collections/${product.category}/product/${product.titleslug}`}
