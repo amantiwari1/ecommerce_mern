@@ -27,8 +27,12 @@ const productActionCreator = {
       dispatch(SaveProductSuccess(res.data));
     })
     .catch((err) => {
-      toast.error(err.response.data.message);
-      console.log(err.response.data.message);
+      if (err.response) {
+        toast.error(err.response.data.message);
+        console.error(err.response.data.message);
+      } else {
+        toast.error("Request failed");
+      }
     });
     dispatch(isLoading(false));
   },
@@ -100,7 +104,12 @@ const productActionCreator = {
         data.history.go(-1);
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        if (err.response) {
+          toast.error(err.response.data.message);
+          console.error(err.response.data.message);
+        } else {
+          toast.error("Request failed");
+        }
       });
 
     dispatch(isLoading(false));

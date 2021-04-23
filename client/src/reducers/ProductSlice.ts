@@ -24,19 +24,15 @@ export const productSlice = createSlice({
     SaveProductSuccess: (state, action) => {
       return {
         ...state,
-        loading: false,
-        valid: false,
         data: [...state.data, {...action.payload}],
       };
     },
     GetProductsSuccess: (state, action) => {
-      return {...state, loading: false, valid: false, data: action.payload};
+      return {...state, data: action.payload};
     },
     GetSingleProductSuccess: (state, action) => {
       return {
         ...state,
-        loading: false,
-        valid: false,
         SingleProduct: {...action.payload},
       };
     },

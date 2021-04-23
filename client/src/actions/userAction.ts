@@ -18,8 +18,12 @@ const userActionCreator = {
         user.history.push("/signin");
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
-        user.history.push("/signin");
+        if (err.response) {
+          toast.error(err.response.data.message);
+        } else {
+          toast.error("Request failed");
+        }
+        
       });
       dispatch(isLoading(false))
   },
@@ -34,7 +38,12 @@ const userActionCreator = {
         user.history.push("/");
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        if (err.response) {
+          toast.error(err.response.data.message);
+        } else {
+
+          toast.error("Request failed");
+        }
       });
     dispatch(isLoading(false))
 
