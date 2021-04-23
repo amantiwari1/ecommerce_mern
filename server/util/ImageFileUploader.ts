@@ -8,38 +8,36 @@ import {use} from './TryCatch'
 
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
- 
-    let updated = undefined;
+      let updated = undefined;
 
-    if (req.params.id) {
-      updated = await ProductCollection.findById(req.params.id).exec();
-    }
-
-    if (!req.body.folder) {
-      if (updated) {
-        req.body.folder = updated.featureImage.split("/")[0];
-      } else {
-        req.body.folder = Date.now();
+      if (req.params.id) {
+        updated = await ProductCollection.findById(req.params.id).exec();
       }
-    }
-
-    const dir = path.join(
-      __dirname,
-      "..",
-      "images",
-      req.body.folder.toString()
-    );
-
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, 
-        
+      
+      if (!req.body.folder) {
+        if (updated) {
+          req.body.folder = updated.featureImage.split("/")[0];
+        } else {
+          req.body.folder = Date.now();
+        }
+      }
+      
+      const dir = path.join(
+        __dirname,
+        "..",
+        "images",
+        req.body.folder.toString()
         );
-    }
-    return cb(null, dir);
-  },
-  
-
-  filename: (req, file, cb) => {
+        
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+        }
+        return cb(null, dir);
+      
+      },
+      
+      
+      filename: (req, file, cb) => {
     cb(null, uuidv4() + path.extname(file.originalname));
   },
 });
