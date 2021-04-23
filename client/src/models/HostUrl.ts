@@ -1,24 +1,43 @@
-// This file is intended to remove the repetition of url & port settings across server and clients.
-// Do not use .env file to store the domain and port since it's difficult to share across platforms.
 
-// You should use explicit ip address such as http://172.21.55.1 instead of http://localhost here if you would like to debug/test the app in LAN for mobile devices.
-// Android emulator also cannot fetch http://localhost correctly. see https://github.com/facebook/react-native/issues/10404 for the detail of this issue.
+// ========================
+//  DEVELOPMENT
+// ========================
+
+// --- Frontend ---
 export const HOST_NAME_DEV: string = "http://localhost";
 export const HOST_PORT_DEV: number = 3000;
-// If you would like to change SERVER_PORT_DEV, please modify client/core/src/setupProxy.js accordingly.
-export const SERVER_PORT_DEV: number = 3001;
 export const HOST_URL_DEV: string = `${HOST_NAME_DEV}:${HOST_PORT_DEV}`;
-export const HOST_NAME_PROD: string =
-  "https://<your_app_name>.azurewebsites.net";
 
-// Keep HOST_PORT_PROD and SERVER_PORT_PROD **the same** for production environment
-export const HOST_PORT_PROD: number = 80;
-export const SERVER_PORT_PROD: number = HOST_PORT_PROD;
+// --- Backend ---
+export const SERVER_NAME_DEV: string = "http://localhost";
+export const SERVER_PORT_DEV: number = 3001;
+export const SERVER_URL_DEV = `${SERVER_NAME_DEV}:${SERVER_PORT_DEV}`;
 
-let url: string;
-if (HOST_PORT_PROD === 80) {
-  url = HOST_NAME_PROD;
+// ========================
+//  PRODUCTION
+// ========================
+
+// --- Frontend ---
+export const HOST_URL_PROD: string = "https://sammee.netlify.app";
+
+// --- Backend ---
+export const SERVER_PORT_URL = process.env.PORT || SERVER_PORT_DEV;
+export const SERVER_URL_PROD = "https://seemoapi.herokuapp.com"
+
+let host_url: string;
+let server_url: string;
+
+const development: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+
+if (development) {
+  host_url = HOST_URL_DEV;
+  server_url = SERVER_URL_DEV;
 } else {
-  url = `${HOST_NAME_PROD}:${HOST_PORT_PROD}`;
+  host_url = HOST_URL_PROD;
+  server_url = SERVER_URL_PROD;
 }
-export const HOST_URL_PROD = url;
+
+
+export const HOST_URL = host_url;
+export const SERVER_PORT = SERVER_PORT_URL;
+export const SERVER_URL = server_url;
