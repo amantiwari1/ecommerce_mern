@@ -9,15 +9,15 @@ import {
   setEmptyCartData,
 } from "../reducers/CartSlide";
 import {isLogin} from "../reducers/UserSlice";
-import {BASE_URL} from '../shared/constants'
+import {SERVER_URL} from '../models/HostUrl'
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL =  BASE_URL
+axios.defaults.baseURL =  SERVER_URL
 
 
 const cartActionCreator = {
   addCart: (cart: any) => async (dispatch: Dispatch) => {
     await axios
-      .post(`${BASE_URL}/cart/create`, cart.data)
+      .post(`${SERVER_URL}/cart/create`, cart.data)
       .then((res) => {
         dispatch(addCartData(res.data.cart));
         cart.history.push("/cart");
@@ -34,7 +34,7 @@ const cartActionCreator = {
 
   getCarts: () => async (dispatch: Dispatch) => {
     await axios
-      .get(`${BASE_URL}/cart/gets`)
+      .get(`${SERVER_URL}/cart/gets`)
       .then((res) => {
         dispatch(getsCartData(res.data.cart));
       })
@@ -52,7 +52,7 @@ const cartActionCreator = {
   },
   removeCart: (id: string) => async (dispatch: Dispatch) => {
     await axios
-      .post(`${BASE_URL}/cart/delete/${id}`)
+      .post(`${SERVER_URL}/cart/delete/${id}`)
       .then(() => {
         toast.success("removed");
         dispatch(removeCartData(id));
@@ -64,7 +64,7 @@ const cartActionCreator = {
   },
   removeAllCart: () => async (dispatch: Dispatch) => {
     await axios
-      .delete(`${BASE_URL}/cart/deleteall/`)
+      .delete(`${SERVER_URL}/cart/deleteall/`)
       .then(() => {
         toast.success("removed all cart items");
         dispatch(setEmptyCartData());

@@ -3,14 +3,14 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import {setEmptyCartData} from "../reducers/CartSlide";
 import { getOrderData } from "../reducers/OrderSlide";
-import {BASE_URL} from '../shared/constants'
+import {SERVER_URL} from '../models/HostUrl'
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL =  BASE_URL
+axios.defaults.baseURL =  SERVER_URL
 
 const orderActionCreator = {
   orderCart: (data: any) => async (dispatch: Dispatch) => {
     await axios
-      .post(`${BASE_URL}/order/create`, data.cart)
+      .post(`${SERVER_URL}/order/create`, data.cart)
       .then(() => {
         toast.success("ordered");
         dispatch(setEmptyCartData());
@@ -22,7 +22,7 @@ const orderActionCreator = {
 
   getOrderData: () => async (dispatch: Dispatch) => {
     await axios
-      .get(`${BASE_URL}/order/read`)
+      .get(`${SERVER_URL}/order/read`)
       .then((res) => {
         dispatch(getOrderData(res.data))
       })

@@ -10,9 +10,9 @@ import {
 } from "../reducers/ProductSlice";
 import {Dispatch} from "@reduxjs/toolkit";
 import {toast} from "react-toastify";
-import {BASE_URL} from '../shared/constants'
+import {SERVER_URL} from '../models/HostUrl'
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL =  BASE_URL
+axios.defaults.baseURL =  SERVER_URL
 
 const productActionCreator = {
   createProduct: (post: any) => async (dispatch: Dispatch) => {
@@ -21,7 +21,7 @@ const productActionCreator = {
     const config = {headers: {"Content-Type": "multipart/form-data"}};
     
     await axios
-    .post(`${BASE_URL}/product/create`, post, config)
+    .post(`${SERVER_URL}/product/create`, post, config)
     .then((res) => {
       toast.success("Successfully");
       dispatch(SaveProductSuccess(res.data));
@@ -41,7 +41,7 @@ const productActionCreator = {
     dispatch(isLoading(true));
 
     await axios
-      .get(`${BASE_URL}/product/gets`)
+      .get(`${SERVER_URL}/product/gets`)
       .then((res) => {
         dispatch(GetProductsSuccess(res.data));
       })
@@ -61,7 +61,7 @@ const productActionCreator = {
     try {
       dispatch(isLoading(true));
       const AllProducts = await axios.get(
-        `${BASE_URL}/product/getsCategories?category=${category}`
+        `${SERVER_URL}/product/getsCategories?category=${category}`
       );
 
 
@@ -79,7 +79,7 @@ const productActionCreator = {
     dispatch(isLoading(true));
 
     await axios
-      .get(`${BASE_URL}/product/get/${titleslug}`)
+      .get(`${SERVER_URL}/product/get/${titleslug}`)
       .then((res) => {
         dispatch(GetSingleProductSuccess(res.data));
       })
@@ -98,7 +98,7 @@ const productActionCreator = {
     dispatch(isLoading(true));
 
     await axios
-      .post(`${BASE_URL}/product/update/${data.data.get("_id")}`, data.data)
+      .post(`${SERVER_URL}/product/update/${data.data.get("_id")}`, data.data)
       .then((res) => {
         dispatch(UpdateProductData(res.data));
         data.history.go(-1);
@@ -119,7 +119,7 @@ const productActionCreator = {
     dispatch(isLoading(true));
 
     await axios
-      .delete(`${BASE_URL}/product/delete/${data.id}`)
+      .delete(`${SERVER_URL}/product/delete/${data.id}`)
       .then(() => {
         dispatch(SetEmptyProduct());
         toast.success("deleled");
@@ -141,7 +141,7 @@ const productActionCreator = {
     dispatch(isLoading(true));
 
     await axios
-      .delete(`${BASE_URL}/product/deleteImage/${id}/${file}`)
+      .delete(`${SERVER_URL}/product/deleteImage/${id}/${file}`)
       .then(() => {
         dispatch(deleteImageProductData(file));
       })

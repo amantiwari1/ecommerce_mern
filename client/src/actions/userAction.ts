@@ -3,16 +3,16 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import User from "../models/User";
 import {addCurrentUser, isLogin, isLoading} from "../reducers/UserSlice";
-import {BASE_URL} from '../shared/constants'
+import {SERVER_URL} from '../models/HostUrl'
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL =  BASE_URL
+axios.defaults.baseURL =  SERVER_URL
 
 const userActionCreator = {
   signup: (user: {data: User; history: any}) => async (dispatch: Dispatch) => {
 
     dispatch(isLoading(true))
     await axios
-    .post(`${BASE_URL}/auth/signup`, user.data)
+    .post(`${SERVER_URL}/auth/signup`, user.data)
     .then(() => {
         toast.success("Successfully Created Account Please Sign In");
         user.history.push("/signin");
@@ -31,7 +31,7 @@ const userActionCreator = {
   login: (user: {data: User; history: any}) => async (dispatch: Dispatch) => {
     dispatch(isLoading(true))
     await axios
-      .post(`${BASE_URL}/auth/signin`, user.data)
+      .post(`${SERVER_URL}/auth/signin`, user.data)
       .then((res) => {
         toast.success("Successfully");
         dispatch(addCurrentUser(res.data));
@@ -52,7 +52,7 @@ const userActionCreator = {
   isLogin: () => async (dispatch: Dispatch) => {
 
     await axios
-      .get(`${BASE_URL}/islogin/verify`)
+      .get(`${SERVER_URL}/islogin/verify`)
       .then((res) => {
         dispatch(addCurrentUser(res.data.data));
         dispatch(isLogin(true));
@@ -67,7 +67,7 @@ const userActionCreator = {
     dispatch(isLoading(true))
 
     await axios
-      .get(`${BASE_URL}/auth/logout`)
+      .get(`${SERVER_URL}/auth/logout`)
       .then(() => {
         toast.success("Successfully logged out");
         dispatch(isLogin(false));
