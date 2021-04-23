@@ -5,7 +5,7 @@ import {setEmptyCartData} from "../reducers/CartSlide";
 import { getOrderData } from "../reducers/OrderSlide";
 import {BASE_URL} from '../shared/constants'
 axios.defaults.withCredentials = true;
-
+axios.defaults.baseURL =  BASE_URL
 
 const orderActionCreator = {
   orderCart: (data: any) => async (dispatch: Dispatch) => {

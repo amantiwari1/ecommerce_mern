@@ -11,6 +11,7 @@ import {
 import {isLogin} from "../reducers/UserSlice";
 import {BASE_URL} from '../shared/constants'
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL =  BASE_URL
 
 
 const cartActionCreator = {
