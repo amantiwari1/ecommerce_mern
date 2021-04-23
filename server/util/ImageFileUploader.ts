@@ -4,9 +4,11 @@ import fs from "fs";
 import {Request} from "express";
 import {v4 as uuidv4} from "uuid";
 import ProductCollection from "../models/Product/ProductCollection";
+import {use} from './TryCatch'
 
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
+ 
     let updated = undefined;
 
     if (req.params.id) {
@@ -29,10 +31,14 @@ const storage = multer.diskStorage({
     );
 
     if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
+      fs.mkdirSync(dir, 
+        
+        );
     }
     return cb(null, dir);
   },
+  
+
   filename: (req, file, cb) => {
     cb(null, uuidv4() + path.extname(file.originalname));
   },
@@ -56,10 +62,10 @@ const fullyUpload = upload.fields([
     name: "featureImage",
     maxCount: 1,
   },
-  {
+  { 
     name: "ImageArray",
     maxCount: 10,
   },
 ]);
 
-export default fullyUpload;
+export default use(fullyUpload)
