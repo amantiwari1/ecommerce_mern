@@ -6,7 +6,8 @@ import {Input, FormWrapper} from "../components";
 import {Link, useHistory} from "react-router-dom";
 import {useRef} from "react";
 import userActionCreator from "../../actions/userAction";
-import {useAppDispatch} from "../../shared/reduxHooks";
+import {useAppDispatch, useAppSelector} from "../../shared/reduxHooks";
+import PulseLoader from "react-spinners/PulseLoader";
 
 type Inputs = {
   email: string;
@@ -19,6 +20,7 @@ const SignUp = () => {
   const history = useHistory();
 
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(state => state.userReducer.loading)  
 
   const {
     register,
@@ -91,8 +93,10 @@ const SignUp = () => {
       <div tw=" flex mb-3 pb-5 justify-center ">
         <button
           type="submit"
-          tw="py-3  focus:outline-none w-40 text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-full ">
-          Sign Up
+          tw="py-3  focus:outline-none w-40 text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-full  disabled:opacity-50" disabled={isLoading} >
+           {
+            isLoading ? <PulseLoader color="#fff"  /> : <p>Sign Up</p> 
+          }
         </button>
       </div>
 
@@ -102,7 +106,9 @@ const SignUp = () => {
           <Link
             to="/signin"
             tw="ml-1  focus:outline-none   text-center text-indigo-600 hover:text-indigo-500 rounded-full ">
+          
             Sign In
+          
           </Link>
         </p>
       </div>
