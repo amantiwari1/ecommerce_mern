@@ -3,7 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import passport from "passport";
-import {MONGODB_URI, SERVER_PORT, ORIGIN_URI} from "./util/secrets";
+import {MONGODB_URI, SERVER_PORT, SERVER_URL, HOST_URL} from "./util/secrets";
 import {Response, Request, NextFunction} from "express";
 import auth from "./routes/auth.routes";
 import product from "./routes/product.routes";
@@ -40,12 +40,12 @@ mongoose
 // Express configuration
 const app = express();
 app.set("server_port", SERVER_PORT);
-app.set("origin_uri", ORIGIN_URI);
+app.set("origin_uri", SERVER_URL);
 app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://sammee.netlify.app",
+    origin: HOST_URL,
     credentials: true,
   })
 );
