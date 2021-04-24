@@ -5,6 +5,7 @@ import {validationErrorResponse} from "./ulits";
 import {validationResult} from "express-validator";
 import path from "path";
 import fs from "fs";
+import errorMessage from "../util/errorMessage";
 
 interface UpdateProduct {
   title: string;
@@ -44,7 +45,9 @@ export const create: RequestHandler = async (req: Request, res: Response) => {
   });
 
   if (isExistTitleSlug) {
-    throw new Error("Already Title Exists");
+    const dir = path.join(__dirname, "..", "images", req.body.folder.toString());
+    fs.rmdirSync(dir, {recursive: true});
+    errorMessage.invalid("Already exists Title");
   }
 
   const product: ProductDocument = new ProductCollection({
@@ -101,7 +104,7 @@ export const getProduct: RequestHandler = async (
   });
 
   if (!isExistTitleSlug) {
-    throw new Error("not found");
+    errorMessage.notFound("Not Found");
   }
 
   const Product = await ProductCollection.findOne({titleslug: titleslug});
