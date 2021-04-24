@@ -1,21 +1,23 @@
 /** @jsxImportSource @emotion/react */
 // eslint-disable-next-line
 import tw from "twin.macro";
-import {useEffect, useState} from "react";
-import {AiOutlineMinusCircle} from "react-icons/ai";
-import {BsPlusCircle} from "react-icons/bs";
+import { useEffect, useState } from "react";
+import { AiOutlineMinusCircle } from "react-icons/ai";
+import { BsPlusCircle } from "react-icons/bs";
 import productActionCreator from "../../actions/productAction";
 import cartActionCreator from "../../actions/cartAction";
 import ReactHtmlParser from "react-html-parser";
-import {Link} from "react-router-dom";
-import {SERVER_URL} from '../../models/HostUrl'
+import { Link } from "react-router-dom";
+import { SERVER_URL } from '../../models/HostUrl'
+import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 
 
-import {useAppDispatch, useAppSelector} from "../../shared/reduxHooks";
-import {useHistory, useParams} from "react-router";
+
+import { useAppDispatch, useAppSelector } from "../../shared/reduxHooks";
+import { useHistory, useParams } from "react-router";
 
 const SignleProduct = () => {
-  const {productName} = useParams<{productName: string}>();
+  const { productName } = useParams<{ productName: string }>();
   const dispatch = useAppDispatch();
   const history = useHistory();
   const {
@@ -26,6 +28,7 @@ const SignleProduct = () => {
     _id,
     titleslug,
   } = useAppSelector((state) => state.productReducer.SingleProduct);
+  const isLoading = useAppSelector(state => state.productReducer.loading)
   const isAdmin = useAppSelector(
     (state) => state.userReducer.currentUser.isAdmin
   );
@@ -41,15 +44,23 @@ const SignleProduct = () => {
   const addCartHandler = () => {
     dispatch(
       cartActionCreator.addCart({
-        data: {ProductId: _id, Quality: Quality},
+        data: { ProductId: _id, Quality: Quality },
         history: history,
       })
     );
   };
 
   const onDeleteProduct = (id: string) => {
-    dispatch(productActionCreator.deleteProduct({id: id, history: history}));
+    dispatch(productActionCreator.deleteProduct({ id: id, history: history }));
   };
+
+  if (isLoading) {
+    return (<div tw="flex flex-col justify-center items-center  min-h-screen" >
+      <ClimbingBoxLoader size="20" />
+      <p tw="font-bold text-2xl" >Loading...</p>
+
+    </div>)
+  }
 
   return (
     <>
