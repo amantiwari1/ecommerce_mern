@@ -12,6 +12,9 @@ const errorMessage = {
   invalid: (message?: string) => {
     Errors(message || "Invalid credentials", 422);
   },
+  notFound: (message?: string) => {
+    Errors(message || "Not found", 404);
+  }
 };
 
 export default errorMessage;
