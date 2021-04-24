@@ -14,7 +14,9 @@ import {
   AddProduct,
   Order
 } from "./pages";
-
+/** @jsxImportSource @emotion/react */
+// eslint-disable-next-line
+import tw from 'twin.macro'
 import {ListofProduct, SingleProduct} from "./template";
 import {Navbar, Footer} from "./components";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,10 +42,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/cart" >
-          {isAuth ? <ShoppingCart /> : <div>Sign In first</div> }
+          {isAuth ? <ShoppingCart /> : <div tw="flex flex-col justify-center items-center  min-h-screen" >Sign In first</div> }
         </Route>
         <Route exact path="/order" >
-          {isAuth ? <Order /> : <div>Sign In first</div> }
+          {isAuth ? <Order /> : <div tw="flex flex-col justify-center items-center  min-h-screen" >Sign In first</div> }
         </Route>
         <Route exact path="/ContactUs" component={ContactUs} />
         <Route exact path="/signin" component={SignIn} />
