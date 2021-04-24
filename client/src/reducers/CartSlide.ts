@@ -4,6 +4,7 @@ import CartState from "../models/client/CartState";
 const initialState: CartState = {
   data: [],
   fullTotal: 0,
+  loading: false,
 };
 
 const cartSlice = createSlice({
@@ -38,6 +39,9 @@ const cartSlice = createSlice({
     setEmptyCartData: (state) => {
       state.data = [];
     },
+    isLoading: (state, action) => {
+      state.loading = action.payload
+  },
   },
 });
 
@@ -46,6 +50,8 @@ export const {
   updateCartData,
   removeCartData,
   setEmptyCartData,
+  isLoading,
+  
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
