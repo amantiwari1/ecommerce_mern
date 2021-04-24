@@ -11,7 +11,7 @@ import {CKEditor} from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {useHistory, useLocation} from "react-router-dom";
 import {useEffect} from "react";
-
+import PulseLoader from 'react-spinners/PulseLoader';
 const Input = tw.input`w-full  border   text-center text-black text-3xl focus:(outline-none ring-4)`;
 const Label = tw.label` font-bold m-4`;
 
@@ -19,7 +19,7 @@ const AddProduct = () => {
   const {search} = useLocation();
   const values = queryString.parse(search);
   const history = useHistory();
-
+  const isLoading  = useAppSelector(state => state.productReducer.loading);
   const {
     register,
     handleSubmit,
@@ -161,8 +161,8 @@ const AddProduct = () => {
 
       <button
         type="submit"
-        tw="py-3 px-4 mt-3 inline-block focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md">
-        {values.edit ? "Update Product" : "Add Product"}
+        tw="py-3 px-4 mt-3 inline-block focus:outline-none  text-white text-center bg-indigo-600 hover:bg-indigo-500 rounded-md" disabled={isLoading}>
+        {isLoading ? <PulseLoader color="#fff" />  : values.edit ? "Update Product" : "Add Product"}
       </button>
     </form>
   );
