@@ -28,7 +28,7 @@ const ListofProduct = () => {
         {CollectName.replaceAll("-", " ")}
       </h1>
         {
-          AllProduct.loading && <div tw="flex flex-col justify-center items-center" > <ClimbingBoxLoader /> <p tw="font-bold text-2xl" >Loading...</p> </div>
+          AllProduct.loading && <div tw="flex flex-col  items-center min-h-screen" > <ClimbingBoxLoader /> <p tw="font-bold text-2xl" >Loading...</p> </div>
         }
       <div tw="grid py-10 px-10  lg:grid-cols-4  md:(grid-cols-3) gap-8 justify-center">
 
