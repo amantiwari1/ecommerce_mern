@@ -2,12 +2,12 @@ import Toggle from "../../theme/themeToggle";
 /** @jsxImportSource @emotion/react */
 import tw from "twin.macro";
 import NavItems from "./NavItems";
-import {GiHamburgerMenu} from "react-icons/gi";
-import {AiOutlineShoppingCart} from "react-icons/ai";
-import {useState} from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useState } from "react";
 import DropdownTwin from "../Dropdown/Dropdown";
-import {Link} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../shared/reduxHooks";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../shared/reduxHooks";
 import userActionCreator from "../../../actions/userAction";
 
 const ShopItems = [
@@ -79,7 +79,7 @@ const Navbar = () => {
     },
   ];
 
-  const {isAuth, currentUser} = useAppSelector((state) => state.userReducer);
+  const { isAuth, currentUser } = useAppSelector((state) => state.userReducer);
 
   if (currentUser.isAdmin) {
     myAccount.push({
@@ -92,7 +92,7 @@ const Navbar = () => {
   return (
     <nav tw=" top-0 p-3 md:px-10 lg:px-20 bg-lightnav space-y-1 text-center items-center h-10v md:( flex space-y-0 justify-between)   dark:(bg-darknav)">
       <div tw="flex justify-between  ">
-        <h1 tw=" text-3xl  tracking-wider text-blue-300 font-bold">Sammoo</h1>
+        <Link to="/" tw=" text-3xl  tracking-wider text-blue-300 font-bold">Sammoo</Link>
         <div tw="flex  items-center space-x-5">
           <Link to="/cart">
             <AiOutlineShoppingCart tw="text-white text-2xl md:hidden cursor-pointer" />
