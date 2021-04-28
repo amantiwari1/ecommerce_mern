@@ -27,6 +27,7 @@ const SignleProduct = () => {
     featureImage,
     _id,
     titleslug,
+    price
   } = useAppSelector((state) => state.productReducer.SingleProduct);
   const isLoading = useAppSelector(state => state.productReducer.loading)
   const isAdmin = useAppSelector(
@@ -97,7 +98,7 @@ const SignleProduct = () => {
 
             <div tw=" ">
               <h1 tw=" text-3xl md:text-5xl font-bold ">{title}</h1>
-              <p tw=" text-xl md:text-3xl ">$25.00</p>
+              <p tw=" text-xl md:text-3xl mt-2">${price}</p>
               {isAdmin && (
                 <div tw="flex mt-4 space-x-3.5 justify-start">
                   <Link to={`/editProduct?edit=true&id=${titleslug}`}>
