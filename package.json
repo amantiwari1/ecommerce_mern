@@ -10,9 +10,9 @@
     "install": "cd client && yarn install",
     "start": "node dist/server/server.js",
     "dev": "concurrently \"yarn serve\" \"yarn client\" ",
-    "serve": "tsc-watch --onSuccess \"node dist/server/server.js\" ",
+    "serve": "cp -R server/images dist/server && tsc-watch --onSuccess \"node dist/server/server.js\" ",
     "client": "node start-client.js",
-    "build": "tsc",
+    "build": "tsc && cp -R server/images dist/server/images",
     "deploy": "git add . && git commit -m Heroku && git push heroku main"
   },
   "devDependencies": {
